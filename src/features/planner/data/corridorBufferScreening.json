@@ -1,0 +1,147 @@
+{
+  "regionId": "athabasca_candidate_11",
+  "status": "PRELIMINARY_DTM_BUFFER_SCREENING",
+  "sourceRaster": "candidate11_slope_deg.tif (team-derived HiRISE DTM slope crop)",
+  "sourceRouteGraph": "network.json",
+  "rasterDistribution": "Derived values only; source GeoTIFF is not bundled with the web app.",
+  "method": {
+    "bufferHalfWidthM": 5,
+    "endCaps": "flat",
+    "pixelSelection": "Slope-raster pixel centers strictly inside a 5 m half-width polygon buffer of each route polyline (shapely.contains_xy).",
+    "crs": "Local XY mapped to team Equirectangular MARS DTM coordinates.",
+    "slopeThresholdDeg": 15,
+    "thresholdIsNASASafetyStandard": false,
+    "percentageMeaning": "Percentage of valid buffered area pixels with slope >15 degrees; NOT percentage of route length.",
+    "interpretation": "Steep nearby pixels flag areas for inspection; no obstacle intersection, traversability, or EVA safety is established."
+  },
+  "edges": [
+    {
+      "edgeId": "P01_C1",
+      "sampledPixels": 1722,
+      "validPixels": 1722,
+      "p95SlopeDeg": 5.32,
+      "maxSlopeDeg": 9.04,
+      "pixelsAbove15DegPercent": 0.0
+    },
+    {
+      "edgeId": "P01_C2",
+      "sampledPixels": 1669,
+      "validPixels": 1669,
+      "p95SlopeDeg": 6.5,
+      "maxSlopeDeg": 13.78,
+      "pixelsAbove15DegPercent": 0.0
+    },
+    {
+      "edgeId": "P01_C3",
+      "sampledPixels": 1675,
+      "validPixels": 1675,
+      "p95SlopeDeg": 8.49,
+      "maxSlopeDeg": 15.17,
+      "pixelsAbove15DegPercent": 0.06
+    },
+    {
+      "edgeId": "P02_C1",
+      "sampledPixels": 1494,
+      "validPixels": 1494,
+      "p95SlopeDeg": 5.45,
+      "maxSlopeDeg": 13.78,
+      "pixelsAbove15DegPercent": 0.0
+    },
+    {
+      "edgeId": "P02_C2",
+      "sampledPixels": 1447,
+      "validPixels": 1447,
+      "p95SlopeDeg": 5.01,
+      "maxSlopeDeg": 14.75,
+      "pixelsAbove15DegPercent": 0.0
+    },
+    {
+      "edgeId": "P02_C3",
+      "sampledPixels": 1447,
+      "validPixels": 1447,
+      "p95SlopeDeg": 5.42,
+      "maxSlopeDeg": 9.52,
+      "pixelsAbove15DegPercent": 0.0
+    },
+    {
+      "edgeId": "P03_C1",
+      "sampledPixels": 1266,
+      "validPixels": 1266,
+      "p95SlopeDeg": 4.72,
+      "maxSlopeDeg": 7.22,
+      "pixelsAbove15DegPercent": 0.0
+    },
+    {
+      "edgeId": "P03_C2",
+      "sampledPixels": 1222,
+      "validPixels": 1222,
+      "p95SlopeDeg": 9.62,
+      "maxSlopeDeg": 16.32,
+      "pixelsAbove15DegPercent": 0.25
+    },
+    {
+      "edgeId": "P03_C3",
+      "sampledPixels": 1184,
+      "validPixels": 1184,
+      "p95SlopeDeg": 11.21,
+      "maxSlopeDeg": 18.7,
+      "pixelsAbove15DegPercent": 0.68
+    },
+    {
+      "edgeId": "P04_C1",
+      "sampledPixels": 4487,
+      "validPixels": 4487,
+      "p95SlopeDeg": 5.54,
+      "maxSlopeDeg": 10.45,
+      "pixelsAbove15DegPercent": 0.0
+    },
+    {
+      "edgeId": "P04_C2",
+      "sampledPixels": 4488,
+      "validPixels": 4488,
+      "p95SlopeDeg": 9.59,
+      "maxSlopeDeg": 26.44,
+      "pixelsAbove15DegPercent": 0.45
+    },
+    {
+      "edgeId": "P04_C3",
+      "sampledPixels": 4468,
+      "validPixels": 4468,
+      "p95SlopeDeg": 10.54,
+      "maxSlopeDeg": 31.88,
+      "pixelsAbove15DegPercent": 0.78
+    },
+    {
+      "edgeId": "P04_C4",
+      "sampledPixels": 4496,
+      "validPixels": 4496,
+      "p95SlopeDeg": 9.6,
+      "maxSlopeDeg": 36.21,
+      "pixelsAbove15DegPercent": 0.51
+    },
+    {
+      "edgeId": "P04_C5",
+      "sampledPixels": 4499,
+      "validPixels": 4499,
+      "p95SlopeDeg": 10.77,
+      "maxSlopeDeg": 20.18,
+      "pixelsAbove15DegPercent": 0.58
+    },
+    {
+      "edgeId": "P04_C6",
+      "sampledPixels": 4533,
+      "validPixels": 4533,
+      "p95SlopeDeg": 9.94,
+      "maxSlopeDeg": 21.27,
+      "pixelsAbove15DegPercent": 0.71
+    },
+    {
+      "edgeId": "P04_MEAN_ALTERNATIVE",
+      "sampledPixels": 12633,
+      "validPixels": 12633,
+      "p95SlopeDeg": 13.73,
+      "maxSlopeDeg": 42.5,
+      "pixelsAbove15DegPercent": 3.82
+    }
+  ]
+}
