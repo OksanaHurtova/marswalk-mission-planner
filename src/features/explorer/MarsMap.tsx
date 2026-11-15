@@ -10,6 +10,7 @@ import Point from 'ol/geom/Point.js';
 import VectorLayer from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
 import { Circle as CircleStyle, Fill, Stroke, Style, Text } from 'ol/style.js';
+import LayerControls, { type LayerVisibility, type MapLayerId } from './LayerControls';
 import 'ol/ol.css';
 
 type Extent = [number, number, number, number];
@@ -53,6 +54,21 @@ export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget }: MarsM
   const containerRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string | null>(null);
   const poiSource = useMemo(() => new VectorSource<Feature<Point>>(), []);
+
+  // T-011: стан перемикачів. OpenLayers-шари не створюються заново при toggle.
+  const [visibleLayers, setVisibleLayers] = useState<LayerVisibility>({
+    'athabasca-base': true,
+    'athabasca-slope': false,
+  });
+  const visibleLayersRef = useRef<LayerVisibility>(visibleLayers);
+  const rasterLayersRef = useRef<Partial<Record<MapLayerId, ImageLayer<ImageStatic>>>>({});
+
+  const handleLayerToggle = (layerId: MapLayerId, visible: boolean) => {
+    const next = { ...visibleLayersRef.current, [layerId]: visible };
+    visibleLayersRef.current = next;
+    setVisibleLayers(next);
+    rasterLayersRef.current[layerId]?.setVisible(visible);
+  };
   // Тримаємо актуальний callback без пересоздання карти при оновленні props.
   const onSelectTargetRef = useRef(onSelectTarget);
 
@@ -110,6 +126,11 @@ export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget }: MarsM
         throw new Error('Межі карти не збігаються з region.json.');
       }
 
+      const slopeConfig = config.layers.find((item) => item.id === 'athabasca-slope');
+      if (!slopeConfig || JSON.stringify(slopeConfig.extent) !== JSON.stringify(region.extent)) {
+        throw new Error('У layers.json відсутній коректний шар athabasca-slope.');
+      }
+
       if (controller.signal.aborted || !containerRef.current) {
         return;
       }
@@ -125,6 +146,8 @@ export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget }: MarsM
       const imageUrl =
         `${base}${layer.url.replace(/^\/+/, '')}`;
 
+      const slopeUrl = `${base}${slopeConfig.url.replace(/^\/+/, '')}`;
+
       const view = new View({
         projection,
         center: getCenter(extent),
@@ -134,19 +157,38 @@ export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget }: MarsM
         minResolution: 0.15,
       });
 
+      const opticalImageLayer = new ImageLayer({
+        visible: visibleLayersRef.current['athabasca-base'],
+        opacity: layer.opacity ?? 1,
+        source: new ImageStatic({
+          url: imageUrl,
+          projection,
+          imageExtent: extent,
+          attributions: layer.attribution,
+        }),
+      });
+
+      const slopeImageLayer = new ImageLayer({
+        visible: visibleLayersRef.current['athabasca-slope'],
+        opacity: slopeConfig.opacity ?? 0.7,
+        source: new ImageStatic({
+          url: slopeUrl,
+          projection,
+          imageExtent: extent,
+          attributions: slopeConfig.attribution,
+        }),
+      });
+
+      rasterLayersRef.current = {
+        'athabasca-base': opticalImageLayer,
+        'athabasca-slope': slopeImageLayer,
+      };
+
       map = new Map({
         target: containerRef.current,
         layers: [
-          new ImageLayer({
-            visible: layer.visible ?? true,
-            opacity: layer.opacity ?? 1,
-            source: new ImageStatic({
-              url: imageUrl,
-              projection,
-              imageExtent: extent,
-              attributions: layer.attribution,
-            }),
-          }),
+          opticalImageLayer,
+          slopeImageLayer,
           new VectorLayer({
             source: poiSource,
             zIndex: 10,
@@ -214,6 +256,7 @@ export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget }: MarsM
     return () => {
       controller.abort();
       map?.setTarget(undefined);
+      rasterLayersRef.current = {};
     };
   }, [poiSource]);
 
@@ -227,6 +270,9 @@ export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget }: MarsM
         background: '#171b20',
       }}
     >
+      <div style={{ position: 'absolute', zIndex: 20, top: 12, right: 12 }}>
+        <LayerControls visible={visibleLayers} onToggle={handleLayerToggle} />
+      </div>
       <div
         ref={containerRef}
         style={{ width: '100%', height: '100%' }}
