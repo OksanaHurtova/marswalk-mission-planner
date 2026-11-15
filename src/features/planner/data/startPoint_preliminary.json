@@ -1,0 +1,32 @@
+
+{
+  "id": "S",
+  "name": "Channel Floor Staging Site",
+  "regionId": "athabasca_candidate_11",
+  "role": "START",
+  "status": "PRELIMINARY",
+  "coordinateSystem": "Equirectangular MARS",
+  "projectedXY_m": [-150, 477270],
+  "localXY_m": [697.995199, 1640.7618],
+  "elevationM": -2666.168457,
+  "slopeDeg": 0.909127,
+  "terrainValidation": {
+    "source": "HiRISE numeric DTM and slope GeoTIFF",
+    "samplingRadiusM": 50,
+    "validSlopeCoveragePercent": 100,
+    "medianSlopeDeg": 2.17,
+    "p95SlopeDeg": 5.28,
+    "maximumSlopeDeg": 13.78,
+    "slopeAbove15Percent": 0,
+    "noDataPercent": 0
+  },
+  "validation": {
+    "dtmMeasurementsVerified": true,
+    "localSlopeVerified": true,
+    "noDataVerified": true,
+    "orthophotoAccessReviewCompleted": false,
+    "routeCorridorsApproved": false,
+    "finalStartApproved": false
+  },
+  "notes": "Working EVA start candidate for the Marswalk prototype. Terrain measurements are verified, but route accessibility and final approval are pending."
+}

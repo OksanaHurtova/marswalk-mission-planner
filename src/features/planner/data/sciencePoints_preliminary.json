@@ -1,0 +1,58 @@
+{
+  "regionId": "athabasca_candidate_11",
+  "coordinateSystem": "local metric XY; derived from projected Equirectangular MARS",
+  "points": [
+    {
+      "id": "P01",
+      "name": "Channel Floor Reference Site",
+      "projectedXY_m": [-430, 476850],
+      "localXY_m": [417.995199, 1220.7618],
+      "elevationM": -2666.72,
+      "slopeDeg": 5.27,
+      "isDTMValid": true,
+      "scienceConfirmed": false,
+      "routeReachabilityConfirmed": false,
+      "status": "PRELIMINARY",
+      "notes": "Valid elevation and slope measurements. Final observation station and route accessibility remain unverified."
+    },
+    {
+      "id": "P02",
+      "name": "Lineated Surface Investigation",
+      "projectedXY_m": [-330, 477670],
+      "localXY_m": [517.995199, 2040.7618],
+      "elevationM": -2667.32,
+      "slopeDeg": 3.64,
+      "isDTMValid": true,
+      "scienceConfirmed": false,
+      "routeReachabilityConfirmed": false,
+      "status": "PRELIMINARY",
+      "notes": "Valid elevation and slope measurements. Confirm the target feature and access corridor."
+    },
+    {
+      "id": "P03",
+      "name": "Channel Margin Exposure",
+      "projectedXY_m": [125, 477025],
+      "localXY_m": [972.995199, 1395.7618],
+      "elevationM": -2652.28,
+      "slopeDeg": 3.93,
+      "isDTMValid": true,
+      "scienceConfirmed": false,
+      "routeReachabilityConfirmed": false,
+      "status": "PRELIMINARY",
+      "notes": "The sampled point has a moderate local slope, but nearby scarp terrain contains much steeper slopes. Verify an accessible observation station and corridor."
+    },
+    {
+      "id": "P04",
+      "name": "Adjacent Surface Comparison Site",
+      "projectedXY_m": [1165, 477065],
+      "localXY_m": [2012.995199, 1435.7618],
+      "elevationM": -2625.29,
+      "slopeDeg": 2.41,
+      "isDTMValid": true,
+      "scienceConfirmed": false,
+      "routeReachabilityConfirmed": false,
+      "status": "PRELIMINARY",
+      "notes": "Valid elevation and slope measurements. Terrain accessibility from the other science stops remains unverified."
+    }
+  ]
+}
