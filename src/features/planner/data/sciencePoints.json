@@ -1,0 +1,199 @@
+{
+  "regionId": "athabasca_candidate_11",
+  "regionName": "Athabasca Valles — Candidate 11",
+  "crs": "Equirectangular MARS",
+  "coordinateFrame": "LOCAL_METERS",
+  "originProjectedXY_m": [
+    -847.9952,
+    475629.2382
+  ],
+  "extent_m": [0, 0, 2500, 2500],
+  "coordinateAxes": {
+    "x": "east",
+    "y": "north"
+  },
+  "status": "PRELIMINARY_POI_LOCATIONS",
+  "startNodeId": "S",
+  "routeCorridorsApproved": false,
+  "description": "Four candidate scientific investigation sites within the Athabasca Valles study area. Local coordinates are aligned with region.json. POI elevations and local slopes are measured from the HiRISE DTM. Coordinates and traverse accessibility remain preliminary.",
+  "sources": {
+    "HIRISE_IMAGE": {
+      "label": "NASA HiRISE orbital imagery",
+      "url": "https://www.uahirise.org/ESP_035191_1880",
+      "observationId": "ESP_035191_1880"
+    },
+    "HIRISE_DTM": {
+      "label": "NASA HiRISE Digital Terrain Model",
+      "url": "https://www.uahirise.org/dtm/ESP_035191_1880",
+      "dtmId": "DTEEC_035191_1880_036457_1880_A01"
+    },
+    "USGS_SIM_3477": {
+      "label": "USGS regional geological context",
+      "url": "https://pubs.usgs.gov/publication/sim3477",
+      "note": "Regional geological context only. Geological units at individual POIs have not been confirmed."
+    }
+  },
+  "points": [
+    {
+      "id": "P01",
+      "nodeId": "P01",
+      "name": "Channel Floor Reference Site",
+      "category": "Reference sampling",
+      "localXY_m": [
+        417.9952,
+        1220.7618
+      ],
+      "projectedXY_m": [
+        -430,
+        476850
+      ],
+      "elevationM": -2666.72,
+      "slopeDeg": 5.27,
+      "isDTMValid": true,
+      "scientificObjective": "Document the morphology and accessible surface materials of the channel floor to establish a baseline for comparison.",
+      "visibleEvidence": "The HiRISE scene contains a comparatively uniform-looking channel floor with subtle linear textures.",
+      "astronautActivities": [
+        "Record close-range surface texture and visible material properties.",
+        "Inspect accessible rocks or deposits.",
+        "Collect a representative sample if suitable materials and equipment are available.",
+        "Record observations for comparison with other science targets."
+      ],
+      "dtmMeasurements": [
+        "Local elevation and slope",
+        "Along-channel elevation profile",
+        "Local terrain variation",
+        "Approach-corridor slope and DTM coverage"
+      ],
+      "sourceIds": [
+        "HIRISE_IMAGE",
+        "HIRISE_DTM",
+        "USGS_SIM_3477"
+      ],
+      "locationStatus": "PRELIMINARY",
+      "scienceConfirmed": false,
+      "routeReachabilityConfirmed": false,
+      "limitations": "The precise representative sampling station and its traverse accessibility have not been confirmed."
+    },
+    {
+      "id": "P02",
+      "nodeId": "P02",
+      "name": "Lineated Surface Investigation",
+      "category": "Surface structures",
+      "localXY_m": [
+        517.9952,
+        2040.7618
+      ],
+      "projectedXY_m": [
+        -330,
+        477670
+      ],
+      "elevationM": -2667.32,
+      "slopeDeg": 3.64,
+      "isDTMValid": true,
+      "scientificObjective": "Characterize the morphology and orientation of lineated terrain and investigate possible surface material movement or deformation.",
+      "visibleEvidence": "Elongated, approximately parallel surface lineations are visible in the HiRISE imagery.",
+      "astronautActivities": [
+        "Document accessible linear surface structures.",
+        "Measure the orientation of visible lineations.",
+        "Examine local terrain textures.",
+        "Compare observations and materials with P01."
+      ],
+      "dtmMeasurements": [
+        "Local elevation and slope",
+        "Cross-lineation elevation profiles",
+        "Topographic expression of selected lineations",
+        "Approach-corridor slope and DTM coverage"
+      ],
+      "sourceIds": [
+        "HIRISE_IMAGE",
+        "HIRISE_DTM",
+        "USGS_SIM_3477"
+      ],
+      "locationStatus": "PRELIMINARY",
+      "scienceConfirmed": false,
+      "routeReachabilityConfirmed": false,
+      "limitations": "The geological origin of the lineations is unconfirmed. Local accessibility and the exact observation station require validation."
+    },
+    {
+      "id": "P03",
+      "nodeId": "P03",
+      "name": "Channel Margin Exposure",
+      "category": "Channel boundary",
+      "localXY_m": [
+        972.9952,
+        1395.7618
+      ],
+      "projectedXY_m": [
+        125,
+        477025
+      ],
+      "elevationM": -2652.28,
+      "slopeDeg": 3.93,
+      "isDTMValid": true,
+      "scientificObjective": "Characterize the channel boundary, its topographic relief, and any accessible exposed materials or geological structures.",
+      "visibleEvidence": "HiRISE imagery shows a sharply defined, irregular channel margin with prominent scarp-like features.",
+      "astronautActivities": [
+        "Observe the channel margin from a suitable location.",
+        "Document visible scarp morphology and geological structures.",
+        "Examine accessible exposures if present.",
+        "Compare channel-margin observations with P01."
+      ],
+      "dtmMeasurements": [
+        "Local elevation and slope",
+        "Cross-margin elevation profile",
+        "Elevation difference between adjacent surfaces",
+        "Approach-corridor slope and DTM coverage",
+        "Terrain variation near the scarp"
+      ],
+      "sourceIds": [
+        "HIRISE_IMAGE",
+        "HIRISE_DTM",
+        "USGS_SIM_3477"
+      ],
+      "locationStatus": "PRELIMINARY",
+      "scienceConfirmed": false,
+      "routeReachabilityConfirmed": false,
+      "limitations": "The local POI slope does not represent nearby scarp hazards. The approach corridor must be validated and the observation station may require relocation."
+    },
+    {
+      "id": "P04",
+      "nodeId": "P04",
+      "name": "Adjacent Surface Comparison Site",
+      "category": "Comparative geology",
+      "localXY_m": [
+        2012.9952,
+        1435.7618
+      ],
+      "projectedXY_m": [
+        1165,
+        477065
+      ],
+      "elevationM": -2625.29,
+      "slopeDeg": 2.41,
+      "isDTMValid": true,
+      "scientificObjective": "Compare accessible terrain adjacent to the channel with the channel-floor reference site, investigating differences in morphology and surface materials.",
+      "visibleEvidence": "The HiRISE scene shows adjacent terrain with surface textures that differ from the channel floor.",
+      "astronautActivities": [
+        "Document adjacent terrain morphology.",
+        "Inspect accessible surface materials.",
+        "Compare observations with P01.",
+        "Identify geological differences requiring further investigation."
+      ],
+      "dtmMeasurements": [
+        "Local elevation and slope",
+        "Elevation difference relative to P01",
+        "Local terrain variation",
+        "Approach-corridor slope and DTM coverage"
+      ],
+      "sourceIds": [
+        "HIRISE_IMAGE",
+        "HIRISE_DTM",
+        "USGS_SIM_3477"
+      ],
+      "locationStatus": "PRELIMINARY",
+      "scienceConfirmed": false,
+      "routeReachabilityConfirmed": false,
+      "limitations": "The scientific distinction of the precise observation station is not fully verified. The S-to-P04 route is method-dependent and no route corridor has been approved."
+    }
+  ]
+}
