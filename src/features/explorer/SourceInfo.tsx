@@ -22,7 +22,7 @@ type LayersFile = { layers?: LayerMetadata[] };
 type Props = { visible: LayerVisibility };
 
 const DISPLAY_NAMES: Record<MapLayerId, string> = {
-  'athabasca-base': 'HiRISE imagery',
+  'athabasca-base': 'MRO / HiRISE imagery',
   'athabasca-slope': 'Slope map (°)',
 };
 
@@ -116,6 +116,28 @@ export default function SourceInfo({ visible }: Props) {
             </section>
           );
         })}
+        <section aria-label="Regional geological context" style={{ paddingBottom: 10, marginBottom: 10, borderBottom: '1px solid #334155' }}>
+          <strong style={{ display: 'block', color: '#fff', marginBottom: 4 }}>
+            Mars Odyssey / THEMIS — regional geology
+          </strong>
+          <div>
+            <b>Source:</b> USGS Scientific Investigations Map 3477, incorporating
+            Mars Odyssey THEMIS daytime infrared imagery.
+          </div>
+          <div>
+            <b>Role:</b> Regional geological and volcanic context for Athabasca Valles.
+            This is not a displayed map raster layer.
+          </div>
+          <div style={{ color: '#fbd38d', marginTop: 5 }}>
+            <b>Limitations:</b> Regional 1:1,000,000 mapping cannot identify
+            meter-scale obstacles or validate route safety.
+          </div>
+          <a href="https://pubs.usgs.gov/publication/sim3477"
+             target="_blank" rel="noopener noreferrer"
+             style={{ color: '#8be6ff' }}>
+            Official USGS SIM 3477 geological map
+          </a>
+        </section>
         <p style={{ color: '#cbd5e1', marginBottom: 2 }}>
           POIs, start S, and routes are preliminary research elements.
           Not a certified astronaut EVA plan; no real-time conditions are included.
