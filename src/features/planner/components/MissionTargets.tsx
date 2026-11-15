@@ -90,7 +90,7 @@ export default function MissionTargets({
             color: "#e0e7ef",
           }}
         >
-          Candidate 11 · 4 science stops
+          4 science targets · 2.5 × 2.5 km
         </span>
       </div>
 
@@ -251,8 +251,7 @@ export default function MissionTargets({
                 opacity: 0.85,
               }}
             >
-              Study area: Athabasca Valles,
-              Candidate 11
+              Study area: Athabasca Valles
               <br />
               Coordinate system:
               Equirectangular MARS
@@ -507,7 +506,7 @@ export default function MissionTargets({
             Mission planning status:
           </strong>{" "}
           This science stop has a preliminary
-          mapped location within Candidate 11.
+          mapped location within the Athabasca Valles study area.
           Final elevations, slopes, observation
           stations, and route accessibility
           require GIS validation.

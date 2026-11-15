@@ -102,7 +102,7 @@ export default function MissionMapConnector({
   return (
     <div style={{ width: '100%', display: 'grid', gap: 24 }}>
       <section aria-label="Interactive Mars mission map">
-        <h2>Mission Area — Candidate 11</h2>
+        <h2>Mission Area — Athabasca Valles</h2>
         <p style={{ lineHeight: 1.6 }}>
           Select a science target or the mission start on the map or in the
           legend. Science destinations calculate experimental routes from S.
@@ -253,7 +253,7 @@ export default function MissionMapConnector({
         <h2 id="experimental-route-heading">Experimental Mars Route Planner</h2>
         <p><strong>Start:</strong> S — Channel Floor Staging Site</p>
         <p><strong>Destination:</strong> {selectedId}</p>
-        <p><strong>Study Area:</strong> Athabasca Valles — Candidate 11</p>
+        <p><strong>Study Area:</strong> Athabasca Valles</p>
         <p><strong>Routing Method:</strong> Balanced Cost + Dijkstra</p>
 
         {isStartSelected ? (
