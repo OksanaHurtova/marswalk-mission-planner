@@ -7,6 +7,7 @@ import Projection from 'ol/proj/Projection.js';
 import { getCenter } from 'ol/extent.js';
 import Feature from 'ol/Feature.js';
 import Point from 'ol/geom/Point.js';
+import LineString from 'ol/geom/LineString.js';
 import VectorLayer from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
 import { Circle as CircleStyle, Fill, Stroke, Style, Text } from 'ol/style.js';
@@ -50,13 +51,25 @@ type MarsMapProps = {
   points?: ScientificPoint[];
   onSelectTarget?: (pointId: string) => void;
   routeGeometry?: RouteGeometry | null;
+  selectedTargetId?: string | null;
 };
 
-export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget, routeGeometry = null }: MarsMapProps) {
+export default function MarsMap({
+  points = EMPTY_POINTS,
+  onSelectTarget,
+  routeGeometry = null,
+  selectedTargetId = null,
+}: MarsMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string | null>(null);
   const [openLayersMap, setOpenLayersMap] = useState<Map | null>(null);
   const poiSource = useMemo(() => new VectorSource<Feature<Point>>(), []);
+  // React controls the selected POI; redraw the vector source, not the whole map.
+  const selectedTargetIdRef = useRef<string | null>(selectedTargetId);
+  useEffect(() => {
+    selectedTargetIdRef.current = selectedTargetId;
+    poiSource.changed();
+  }, [selectedTargetId, poiSource]);
 
   // T-011: стан перемикачів. OpenLayers-шари не створюються заново при toggle.
   const [visibleLayers, setVisibleLayers] = useState<LayerVisibility>({
@@ -195,20 +208,31 @@ export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget, routeGe
           new VectorLayer({
             source: poiSource,
             zIndex: 10,
-            style: (feature) => new Style({
-              image: new CircleStyle({
-                radius: 8,
-                fill: new Fill({ color: '#ffbd55' }),
-                stroke: new Stroke({ color: '#18202a', width: 2 }),
-              }),
-              text: new Text({
-                text: String(feature.get('pointId') ?? ''),
-                offsetY: -21,
-                font: 'bold 14px sans-serif',
-                fill: new Fill({ color: '#ffffff' }),
-                stroke: new Stroke({ color: '#18202a', width: 3 }),
-              }),
-            }),
+            style: (feature) => {
+              const pointId = String(feature.get('pointId') ?? '');
+              const selected = selectedTargetIdRef.current;
+              const active = selected === pointId;
+              const muted = selected !== null && !active;
+              return new Style({
+                image: new CircleStyle({
+                  radius: active ? 12 : muted ? 6 : 8,
+                  fill: new Fill({
+                    color: active ? '#ffe36a' : muted ? 'rgba(166,182,199,0.65)' : '#ffbd55',
+                  }),
+                  stroke: new Stroke({
+                    color: active ? '#10212d' : '#18202a',
+                    width: active ? 4 : 2,
+                  }),
+                }),
+                text: new Text({
+                  text: active ? `★ ${pointId}` : pointId,
+                  offsetY: active ? -27 : -21,
+                  font: active ? 'bold 16px sans-serif' : 'bold 14px sans-serif',
+                  fill: new Fill({ color: muted ? 'rgba(238,242,247,0.68)' : '#ffffff' }),
+                  stroke: new Stroke({ color: '#18202a', width: active ? 5 : 3 }),
+                }),
+              });
+            },
           }),
         ],
         view,
@@ -263,6 +287,25 @@ export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget, routeGe
       rasterLayersRef.current = {};
     };
   }, [poiSource]);
+
+  // Keep S, all corridor bends, and the destination in frame on selection.
+  // Routes are local Mars metres. This changes the view only, not the geometry.
+  useEffect(() => {
+    if (!openLayersMap || !routeGeometry || routeGeometry.length < 2) return;
+    if (routeGeometry.some((xy) =>
+      xy.length !== 2 || !Number.isFinite(xy[0]) || !Number.isFinite(xy[1]) ||
+      xy[0] < 0 || xy[0] > 2500 || xy[1] < 0 || xy[1] > 2500
+    )) return;
+    const size = openLayersMap.getSize();
+    if (!size || size[0] <= 0 || size[1] <= 0) return;
+    const routeBounds = new LineString(routeGeometry.map((xy) => [xy[0], xy[1]])).getExtent();
+    openLayersMap.getView().fit(routeBounds, {
+      size,
+      padding: [85, 70, 85, 70],
+      duration: 500,
+      maxZoom: 5,
+    });
+  }, [openLayersMap, routeGeometry, selectedTargetId]);
 
   return (
     <div

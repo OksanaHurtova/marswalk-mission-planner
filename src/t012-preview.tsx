@@ -30,6 +30,7 @@ function RoutePreview() {
       </nav>
       <MarsMap
         points={demoPoints}
+        selectedTargetId={selected}
         routeGeometry={experimentalRoutesFromAnia[selected]}
         onSelectTarget={changeTarget}
       />

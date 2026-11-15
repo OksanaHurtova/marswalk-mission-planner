@@ -5,7 +5,7 @@ import LineString from 'ol/geom/LineString.js';
 import Point from 'ol/geom/Point.js';
 import VectorLayer from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
-import { Circle as CircleStyle, Fill, Stroke, Style, Text } from 'ol/style.js';
+import { Circle as CircleStyle, Fill, RegularShape, Stroke, Style, Text } from 'ol/style.js';
 
 // Exact coordinate shape of Ania's RouteResult.geometry: XY[] where XY = [number, number].
 // The planner owns routing; this component only draws the returned coordinates.
@@ -16,24 +16,37 @@ type RouteOverlayProps = {
   geometry?: RouteGeometry | null;
 };
 
-const routeStyle = new Style({
-  stroke: new Stroke({ color: '#00dcff', width: 4, lineDash: [9, 6] }),
-});
+// Dark outline under the bright route makes it legible on both raster layers.
+const routeStyles = [
+  new Style({ stroke: new Stroke({ color: '#071923', width: 11 }) }),
+  new Style({ stroke: new Stroke({ color: '#00e9ff', width: 6, lineDash: [16, 7] }) }),
+];
 
-const startStyle = new Style({
-  image: new CircleStyle({
-    radius: 10,
-    fill: new Fill({ color: '#ffffff' }),
-    stroke: new Stroke({ color: '#183f53', width: 3 }),
+const startStyles = [
+  new Style({
+    image: new CircleStyle({
+      radius: 19,
+      fill: new Fill({ color: 'rgba(7,25,35,0.95)' }),
+      stroke: new Stroke({ color: '#ffffff', width: 2 }),
+    }),
   }),
-  text: new Text({
-    text: 'S',
-    offsetY: -22,
-    font: 'bold 15px sans-serif',
-    fill: new Fill({ color: '#ffffff' }),
-    stroke: new Stroke({ color: '#183f53', width: 4 }),
+  new Style({
+    image: new RegularShape({
+      points: 4,
+      radius: 15,
+      angle: Math.PI / 4,
+      fill: new Fill({ color: '#22e4a8' }),
+      stroke: new Stroke({ color: '#0b2431', width: 3 }),
+    }),
+    text: new Text({
+      text: 'СТАРТ · S',
+      offsetY: -35,
+      font: 'bold 16px sans-serif',
+      fill: new Fill({ color: '#ffffff' }),
+      stroke: new Stroke({ color: '#071923', width: 5 }),
+    }),
   }),
-});
+];
 
 /** Draws an experimental route and its first vertex S without changing the map view. */
 export default function RouteOverlay({ map, geometry }: RouteOverlayProps) {
@@ -41,7 +54,7 @@ export default function RouteOverlay({ map, geometry }: RouteOverlayProps) {
   const layer = useMemo(() => new VectorLayer({
     source,
     zIndex: 5, // above imagery, below POI marker layer (zIndex 10)
-    style: (feature) => feature.get('routeRole') === 'start' ? startStyle : routeStyle,
+    style: (feature) => feature.get('routeRole') === 'start' ? startStyles : routeStyles,
   }), [source]);
 
   useEffect(() => {
