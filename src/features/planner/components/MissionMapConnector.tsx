@@ -29,9 +29,6 @@ type MapPoint = {
   status?: string;
 };
 
-// The existing MarsMap supports points and onSelectTarget.
-// selectedTargetId and routeGeometry are the proposed
-// next-stage OpenLayers integration contract.
 type CompatibleMarsMapProps = {
   points?: MapPoint[];
   onSelectTarget?: (pointId: string) => void;
@@ -66,12 +63,18 @@ const scienceMapPoints: MapPoint[] =
     status: point.locationStatus,
   }));
 
-// Show S and the four science targets on the map.
-// Intermediate route nodes are not science stops.
 const mapPoints: MapPoint[] = [
   startMapPoint,
   ...scienceMapPoints,
 ];
+
+const locationHints: Record<string, string> = {
+  S: "Upper-left central area",
+  P01: "Lower-left area",
+  P02: "Upper-left area",
+  P03: "Near the center",
+  P04: "Right side",
+};
 
 function isScienceTargetId(
   id: string
@@ -100,13 +103,10 @@ export default function MissionMapConnector({
 
   const route = recommendation.route;
 
-  // RouteResult.geometry contains ordered local
-  // coordinates in metres: [x, y].
   const routeGeometry: XY[] =
     route?.geometry ?? [];
 
   function handleMapSelection(pointId: string) {
-    // S is a start marker, not a science destination.
     if (isScienceTargetId(pointId)) {
       setSelectedId(pointId);
     }
@@ -120,14 +120,12 @@ export default function MissionMapConnector({
         gap: 24,
       }}
     >
-      <section
-        aria-label="Interactive Mars mission map"
-      >
+      <section aria-label="Interactive Mars mission map">
         <h2>Mission Area — Candidate 11</h2>
 
         <p style={{ lineHeight: 1.6 }}>
           Select a science target on the map
-          or in the mission cards to explore
+          or in the legend below to explore
           its scientific objectives and
           experimental route from S.
         </p>
@@ -139,31 +137,253 @@ export default function MissionMapConnector({
           routeGeometry={routeGeometry}
         />
 
-        <p
+        <div
+          aria-label="Mission map legend"
           style={{
-            marginTop: 12,
-            fontSize: 13,
-            lineHeight: 1.6,
-            color: "#b8c9db",
+            marginTop: 16,
+            padding: 18,
+            border: "1px solid #536478",
+            borderRadius: 12,
+            background: "#172331",
           }}
         >
-          <strong>Map points:</strong>{" "}
-          S — Mission Start;
-          P01–P04 — Candidate Science Targets.
-        </p>
+          <h3
+            style={{
+              margin: "0 0 8px",
+              fontSize: 20,
+            }}
+          >
+            Map Legend — Mission Locations
+          </h3>
 
-        <p
-          style={{
-            fontSize: 12,
-            lineHeight: 1.6,
-            color: "#91a8bf",
-          }}
-        >
-          All coordinates use the Candidate 11
-          local metric coordinate system.
-          X increases eastward and Y increases
-          northward.
-        </p>
+          <p
+            style={{
+              margin: "0 0 16px",
+              color: "#bdcbdb",
+              fontSize: 14,
+              lineHeight: 1.6,
+            }}
+          >
+            Orange markers identify the mission
+            start and four science targets.
+            Select a destination below to update
+            the science details and route summary.
+          </p>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(180px, 1fr))",
+              gap: 12,
+            }}
+          >
+            <div
+              style={{
+                padding: 14,
+                border: "1px solid #8191a5",
+                borderRadius: 10,
+                background: "#263342",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  marginBottom: 10,
+                }}
+              >
+                <span
+                  aria-hidden="true"
+                  style={{
+                    display: "inline-block",
+                    width: 12,
+                    height: 12,
+                    borderRadius: "50%",
+                    background: "#ffbd55",
+                    border: "2px solid #ffffff",
+                  }}
+                />
+
+                <strong
+                  style={{
+                    fontSize: 19,
+                    color: "#ffffff",
+                  }}
+                >
+                  S
+                </strong>
+
+                <span
+                  style={{
+                    fontSize: 11,
+                    color: "#f1cc85",
+                    fontWeight: 700,
+                  }}
+                >
+                  START
+                </span>
+              </div>
+
+              <div
+                style={{
+                  fontWeight: 600,
+                  fontSize: 14,
+                  lineHeight: 1.5,
+                }}
+              >
+                {startMapPoint.name}
+              </div>
+
+              <div
+                style={{
+                  marginTop: 8,
+                  fontSize: 12,
+                  color: "#aabfd2",
+                }}
+              >
+                {locationHints.S}
+              </div>
+
+              <div
+                style={{
+                  marginTop: 8,
+                  fontSize: 12,
+                  color: "#d5e2ef",
+                }}
+              >
+                Departure location for
+                experimental routes
+              </div>
+            </div>
+
+            {scienceMapPoints.map((point) => {
+              const isSelected =
+                point.id === selectedId;
+
+              return (
+                <button
+                  key={point.id}
+                  type="button"
+                  aria-pressed={isSelected}
+                  onClick={() =>
+                    handleMapSelection(point.id)
+                  }
+                  style={{
+                    appearance: "none",
+                    cursor: "pointer",
+                    display: "block",
+                    width: "100%",
+                    padding: 14,
+                    textAlign: "left",
+                    border: isSelected
+                      ? "2px solid #80cfff"
+                      : "1px solid #536478",
+                    borderRadius: 10,
+                    color: "#eef4fc",
+                    background: isSelected
+                      ? "#1e3c55"
+                      : "#263342",
+                    boxShadow: isSelected
+                      ? "0 0 0 1px #80cfff"
+                      : "none",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 10,
+                      marginBottom: 10,
+                    }}
+                  >
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        display: "inline-block",
+                        width: 12,
+                        height: 12,
+                        borderRadius: "50%",
+                        background: "#ffbd55",
+                        border: "2px solid #ffffff",
+                      }}
+                    />
+
+                    <strong
+                      style={{
+                        fontSize: 19,
+                      }}
+                    >
+                      {point.id}
+                    </strong>
+
+                    {isSelected && (
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: "#95dfff",
+                        }}
+                      >
+                        SELECTED
+                      </span>
+                    )}
+                  </div>
+
+                  <div
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 600,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {point.name}
+                  </div>
+
+                  <div
+                    style={{
+                      marginTop: 8,
+                      fontSize: 12,
+                      color: "#b6c8dc",
+                    }}
+                  >
+                    {locationHints[point.id] ??
+                      "Candidate science site"}
+                  </div>
+
+                  <div
+                    style={{
+                      marginTop: 8,
+                      fontSize: 12,
+                      color: "#91d4ff",
+                      fontWeight: 600,
+                    }}
+                  >
+                    View science and route
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          <p
+            style={{
+              margin: "14px 0 0",
+              fontSize: 12,
+              color: "#9daec1",
+              lineHeight: 1.6,
+            }}
+          >
+            Location descriptions are approximate
+            directions within the displayed map.
+            Target positions are preliminary.
+            Map-marker highlighting and route
+            drawing require additional OpenLayers
+            support.
+          </p>
+        </div>
       </section>
 
       <MissionTargets
@@ -211,9 +431,7 @@ export default function MissionMapConnector({
             <ul>
               {recommendation.errors.map(
                 (error, index) => (
-                  <li key={index}>
-                    {error}
-                  </li>
+                  <li key={index}>{error}</li>
                 )
               )}
             </ul>
@@ -240,7 +458,9 @@ export default function MissionMapConnector({
             </p>
 
             <p>
-              <strong>Terrain Difficulty Index:</strong>{" "}
+              <strong>
+                Terrain Difficulty Index:
+              </strong>{" "}
               {route.difficultyIndex === null
                 ? "Unavailable"
                 : route.difficultyIndex.toFixed(4)}
@@ -254,7 +474,9 @@ export default function MissionMapConnector({
             </p>
 
             <p>
-              <strong>Route Geometry:</strong>{" "}
+              <strong>
+                Route Geometry:
+              </strong>{" "}
               {routeGeometry.length} coordinates
               prepared for OpenLayers
             </p>
@@ -312,9 +534,7 @@ export default function MissionMapConnector({
             <ul>
               {recommendation.warnings.map(
                 (warning, index) => (
-                  <li key={index}>
-                    {warning}
-                  </li>
+                  <li key={index}>{warning}</li>
                 )
               )}
             </ul>
@@ -354,4 +574,3 @@ export default function MissionMapConnector({
     </div>
   );
 }
-
