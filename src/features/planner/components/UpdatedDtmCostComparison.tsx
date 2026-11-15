@@ -194,10 +194,10 @@ export default function UpdatedDtmCostComparison({ selectedTargetId }: Props) {
           margin: '14px 0 0',
         }}
       >
-        <strong>Methodology:</strong> {comparison.modelDescription} The
+        <strong>Methodology:</strong> {comparison.modelDescription.replace('Updated DTM: T-016 mean centerline slope', 'Centerline scenario: mean centerline slope')} The
         experimental 15° reference is not a NASA EVA safety standard.
         Centerline measurement coverage refers to sampled positions along the
-        route, not the full corridor width. In the updated scenario, a zero
+        route, not the full corridor width. In the centerline scenario, a zero
         difficulty penalty is a neutralization of double-counted slope, not a
         measured zero hazard level.
       </p>
