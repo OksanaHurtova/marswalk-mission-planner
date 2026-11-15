@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "regionId": "athabasca_candidate_11",
+  "projection": "MARS_LOCAL",
+  "units": "m",
+  "extent": [
+    0,
+    0,
+    2500,
+    2500
+  ],
+  "layers": [
+    {
+      "id": "athabasca-base",
+      "type": "image-static",
+      "title": "Athabasca Valles — HiRISE orthophoto",
+      "url": "maps/athabasca-base.webp",
+      "extent": [
+        0,
+        0,
+        2500,
+        2500
+      ],
+      "imageSizePx": [
+        2048,
+        2048
+      ],
+      "visible": true,
+      "opacity": 1,
+      "attribution": "HiRISE / NASA / JPL / University of Arizona",
+      "source": {
+        "product": "ESP_035191_1880_RED_A_01_ORTHO.JP2",
+        "url": "https://www.uahirise.org/ESP_035191_1880"
+      }
+    }
+  ]
+}
