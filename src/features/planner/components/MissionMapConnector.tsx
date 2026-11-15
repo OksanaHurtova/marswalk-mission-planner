@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react';
 import type { ComponentType } from 'react';
 
 import MissionTargets from './MissionTargets';
+import RouteSummary from './RouteSummary';
+import RouteExplanation from './RouteExplanation';
 import RouteTerrainScreening from './RouteTerrainScreening';
 import UpdatedDtmCostComparison from './UpdatedDtmCostComparison';
 import {
@@ -274,29 +276,11 @@ export default function MissionMapConnector({
 
             {route ? (
               <section>
-                <h3>Experimental Route Summary</h3>
-                <p><strong>Route:</strong> {route.nodeIds.join(' → ')}</p>
-                <p><strong>Distance:</strong> {route.distanceM.toFixed(1)} m</p>
-                <p><strong>Balanced Cost:</strong> {route.balancedCost.toFixed(4)}</p>
-                <p>
-                  <strong>Terrain Difficulty Index:</strong>{' '}
-                  {route.difficultyIndex === null
-                    ? 'Unavailable'
-                    : route.difficultyIndex.toFixed(4)}
-                </p>
-                <p>
-                  <strong>Mean Route Slope:</strong>{' '}
-                  {route.meanSlopeDegrees === null
-                    ? 'Unavailable'
-                    : `${route.meanSlopeDegrees.toFixed(2)}°`}
-                </p>
-                <p>
-                  <strong>Route Geometry:</strong>{' '}
-                  {routeGeometry.length} coordinates rendered by OpenLayers
-                </p>
-                <p style={{ fontSize: 13, color: '#b8c9db', lineHeight: 1.6 }}>
-                  {route.explanation}
-                </p>
+                <RouteSummary
+                  route={route}
+                  renderedCoordinateCount={routeGeometry.length}
+                />
+                <RouteExplanation route={route} />
                 <RouteTerrainScreening route={route} />
                 <UpdatedDtmCostComparison selectedTargetId={selectedId} />
 
