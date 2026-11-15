@@ -44,10 +44,21 @@ export type ScientificPoint = {
 
 const EMPTY_POINTS: ScientificPoint[] = [];
 
-export default function MarsMap({ points = EMPTY_POINTS }: { points?: ScientificPoint[] }) {
+type MarsMapProps = {
+  points?: ScientificPoint[];
+  onSelectTarget?: (pointId: string) => void;
+};
+
+export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget }: MarsMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string | null>(null);
   const poiSource = useMemo(() => new VectorSource<Feature<Point>>(), []);
+  // Тримаємо актуальний callback без пересоздання карти при оновленні props.
+  const onSelectTargetRef = useRef(onSelectTarget);
+
+  useEffect(() => {
+    onSelectTargetRef.current = onSelectTarget;
+  }, [onSelectTarget]);
 
   // Оновлюємо маркери, не скидаючи масштаб і положення карти.
   useEffect(() => {
@@ -156,6 +167,35 @@ export default function MarsMap({ points = EMPTY_POINTS }: { points?: Scientific
           }),
         ],
         view,
+      });
+
+      // T-010: клік по POI передає тільки id у батьківський компонент.
+      map.on('singleclick', (event) => {
+        const selectedFeature = map?.forEachFeatureAtPixel(
+          event.pixel,
+          (feature) => feature,
+          {
+            hitTolerance: 10,
+            layerFilter: (candidate) =>
+              candidate instanceof VectorLayer && candidate.getSource() === poiSource,
+          }
+        );
+        const pointId = selectedFeature?.get('pointId');
+        if (typeof pointId === 'string') {
+          onSelectTargetRef.current?.(pointId);
+        }
+      });
+
+      // Показуємо, що на маркер можна натиснути.
+      map.on('pointermove', (event) => {
+        const element = map?.getTargetElement();
+        if (!element || event.dragging) return;
+        const onPoi = map?.hasFeatureAtPixel(event.pixel, {
+          hitTolerance: 10,
+          layerFilter: (candidate) =>
+            candidate instanceof VectorLayer && candidate.getSource() === poiSource,
+        });
+        element.style.cursor = onPoi ? 'pointer' : '';
       });
 
       map.updateSize();
