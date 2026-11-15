@@ -1,9 +1,7 @@
 import { useMemo } from 'react';
 import type { RouteResult } from '../lib/routeResult';
-import {
-  analyzeRouteTerrain,
-  describeVisualFactor,
-} from '../lib/routeTerrainScreening';
+import { compareRouteTerrain } from '../lib/routeTerrainComparison';
+import { describeVisualFactor } from '../lib/routeTerrainScreening';
 
 type Props = {
   route: RouteResult | null;
@@ -11,133 +9,158 @@ type Props = {
 
 const labelStyle = {
   margin: 0,
-  fontSize: 12,
+  fontSize: 13,
   color: '#b9cddd',
 } as const;
 
-function Metric({ title, value }: { title: string; value: string }) {
+function formatDegrees(value: number | null): string {
+  return value === null ? 'Unavailable' : `${value.toFixed(2)}°`;
+}
+
+function formatElevation(value: number | null): string {
+  return value === null ? 'Unavailable' : `${value.toFixed(2)} m`;
+}
+
+function formatCoverage(value: number | null): string {
+  return value === null ? 'Unavailable' : `${(value * 100).toFixed(1)}%`;
+}
+
+function Metric({ title, value, description }: {
+  title: string;
+  value: string;
+  description?: string;
+}) {
   return (
     <div
       style={{
         minWidth: 165,
-        padding: 14,
+        padding: 15,
         borderRadius: 10,
         background: '#243444',
         border: '1px solid #4f667b',
       }}
     >
       <p style={labelStyle}>{title}</p>
-      <strong style={{ display: 'block', marginTop: 7, fontSize: 22, color: '#edf7ff' }}>
+      <strong style={{ display: 'block', marginTop: 7, fontSize: 23, color: '#edf7ff' }}>
         {value}
       </strong>
+      {description && (
+        <p style={{ margin: '7px 0 0', color: '#b9cddd', fontSize: 12, lineHeight: 1.5 }}>
+          {description}
+        </p>
+      )}
     </div>
   );
 }
 
-export default function RouteTerrainScreening({ route }: Props) {
-  const result = useMemo(() => analyzeRouteTerrain(route), [route]);
+const cellStyle = {
+  padding: '12px 10px',
+  whiteSpace: 'nowrap',
+  textAlign: 'left',
+} as const;
 
-  if (!result) return null;
+export default function RouteTerrainScreening({ route }: Props) {
+  const comparison = useMemo(() => compareRouteTerrain(route), [route]);
+  if (!comparison) return null;
+
+  const { existingScreening, corridors } = comparison;
 
   return (
     <section
       aria-labelledby="terrain-screening-heading"
       style={{
         marginTop: 24,
-        padding: 18,
+        padding: 20,
         border: '1px solid #537186',
         borderRadius: 12,
         background: '#132434',
         color: '#e9f3ff',
       }}
     >
-      <h3 id="terrain-screening-heading" style={{ margin: '0 0 8px', fontSize: 22 }}>
-        Terrain Screening — Selected Route
+      <h3 id="terrain-screening-heading" style={{ margin: '0 0 9px', fontSize: 23 }}>
+        Terrain Evidence — Selected Route
       </h3>
-
-      <p style={{ margin: '0 0 16px', lineHeight: 1.6, color: '#ccdfed' }}>
-        DTM evidence for the corridors used by this route. The surrounding terrain
-        is sampled in a 10 m-wide strip (5 m on each side). A steep pixel near
-        a line is a reason to inspect the area, not proof that the line crosses
-        an obstacle.
+      <p style={{ margin: '0 0 18px', color: '#ccdfed', lineHeight: 1.65, fontSize: 14 }}>
+        Compare two different measurements of the selected experimental corridor: the
+        T-016 1 m-step centerline samples and the T-029 10 m-wide terrain strip
+        (5 m on each side). The original Dijkstra graph costs are unchanged.
       </p>
 
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(175px, 1fr))',
           gap: 12,
-          marginBottom: 16,
+          marginBottom: 18,
         }}
       >
-        <Metric title="Route corridors" value={String(result.corridorCount)} />
+        <Metric
+          title="Highest slope on centerline"
+          value={formatDegrees(comparison.maxCenterlineSlopeDeg)}
+          description="T-016: original slope pixels sampled along the route"
+        />
+        <Metric
+          title="Highest slope within ±5 m"
+          value={formatDegrees(comparison.maxNearbySlopeDeg)}
+          description="T-029: pixels in a strip surrounding the route"
+        />
+        <Metric
+          title="Centerline coverage"
+          value={`${comparison.centerlineFullCoverageCorridors} / ${existingScreening.corridorCount}`}
+          description="Edges with 100% valid planned centerline sample positions"
+        />
         <Metric
           title="Corridors with nearby pixels >15°"
-          value={`${result.nearbySteepPixelCorridorCount} / ${result.corridorCount}`}
-        />
-        <Metric
-          title="Highest nearby pixel slope"
-          value={result.maxNearbySlopeDeg === null
-            ? 'N/A'
-            : `${result.maxNearbySlopeDeg.toFixed(2)}°`}
-        />
-        <Metric
-          title="High inspection priority"
-          value={`${result.highReviewPriorityCount} / ${result.corridorCount}`}
+          value={`${existingScreening.nearbySteepPixelCorridorCount} / ${existingScreening.corridorCount}`}
+          description="Inspection indicator; not a NASA safety criterion"
         />
       </div>
 
       <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+        <table style={{ width: '100%', minWidth: 840, borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ background: '#21384b' }}>
               {[
                 'Corridor',
                 'Length',
-                'Model max cell',
+                '1 m line mean slope',
+                '1 m line max slope',
                 'Nearby max ±5 m',
                 'Nearby pixels >15°',
-                'Review',
+                'DTM + slope line coverage',
+                'Inspection priority',
               ].map((heading) => (
-                <th
-                  key={heading}
-                  scope="col"
-                  style={{ textAlign: 'left', padding: '12px 10px', whiteSpace: 'nowrap' }}
-                >
+                <th key={heading} scope="col" style={cellStyle}>
                   {heading}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {result.corridors.map((corridor) => (
-              <tr
-                key={corridor.edgeId}
-                style={{ borderBottom: '1px solid #41596b' }}
-              >
-                <th scope="row" style={{ padding: '12px 10px', textAlign: 'left' }}>
-                  {corridor.edgeId}
-                  <div style={{ color: '#b9cddd', fontWeight: 400, fontSize: 11 }}>
-                    {corridor.fromNodeId} → {corridor.toNodeId}
+            {corridors.map(({ edgeId, modelAndBuffer: buffer, centerline }) => (
+              <tr key={edgeId} style={{ borderBottom: '1px solid #41596b' }}>
+                <th scope="row" style={cellStyle}>
+                  {edgeId}
+                  <div style={{ marginTop: 4, fontSize: 12, color: '#b9cddd', fontWeight: 400 }}>
+                    {buffer.fromNodeId} → {buffer.toNodeId}
                   </div>
                 </th>
-                <td style={{ padding: '12px 10px', whiteSpace: 'nowrap' }}>
-                  {corridor.lengthM.toFixed(1)} m
+                <td style={cellStyle}>{buffer.lengthM.toFixed(1)} m</td>
+                <td style={cellStyle}>{formatDegrees(centerline?.meanSlopeDeg ?? null)}</td>
+                <td style={cellStyle}>{formatDegrees(centerline?.maxSlopeDeg ?? null)}</td>
+                <td style={cellStyle}>{formatDegrees(buffer.bufferMaxSlopeDeg)}</td>
+                <td
+                  style={{
+                    ...cellStyle,
+                    fontWeight: 700,
+                    color: buffer.hasNearbyPixelsAbove15Deg ? '#ffcf86' : '#b8e2ce',
+                  }}
+                >
+                  {buffer.bufferPixelsAbove15DegPercent.toFixed(2)}%
                 </td>
-                <td style={{ padding: '12px 10px' }}>
-                  {corridor.modelMaxSampledCellSlopeDeg.toFixed(2)}°
-                </td>
-                <td style={{ padding: '12px 10px' }}>
-                  {corridor.bufferMaxSlopeDeg.toFixed(2)}°
-                </td>
-                <td style={{ padding: '12px 10px', fontWeight: 700,
-                  color: corridor.hasNearbyPixelsAbove15Deg ? '#ffcf86' : '#b8e2ce' }}>
-                  {corridor.bufferPixelsAbove15DegPercent.toFixed(2)}%
-                </td>
-                <td style={{ padding: '12px 10px', whiteSpace: 'nowrap' }}>
-                  {corridor.reviewPriority === 'HIGH'
-                    ? 'HIGH — inspect'
-                    : 'STANDARD — inspect'}
+                <td style={cellStyle}>{formatCoverage(centerline?.coverageFraction ?? null)}</td>
+                <td style={cellStyle}>
+                  {buffer.reviewPriority === 'HIGH' ? 'HIGH — inspect' : 'STANDARD — inspect'}
                 </td>
               </tr>
             ))}
@@ -145,50 +168,73 @@ export default function RouteTerrainScreening({ route }: Props) {
         </table>
       </div>
 
-      <div style={{ marginTop: 18, display: 'grid', gap: 10 }}>
-        <h4 style={{ margin: 0 }}>What still needs visual verification?</h4>
-        {result.corridors.map((corridor) => (
+      <h4 style={{ margin: '22px 0 12px', fontSize: 17 }}>
+        Corridor measurements and checks
+      </h4>
+      <div style={{ display: 'grid', gap: 10 }}>
+        {corridors.map(({ edgeId, modelAndBuffer: buffer, centerline }) => (
           <details
-            key={corridor.edgeId}
-            style={{ padding: '9px 12px', border: '1px solid #3c5364', borderRadius: 8 }}
+            key={edgeId}
+            style={{ padding: '12px 14px', border: '1px solid #3c5364', borderRadius: 8 }}
           >
-            <summary style={{ cursor: 'pointer', fontWeight: 600 }}>
-              {corridor.edgeId} — {corridor.reviewPriority.toLowerCase()} review priority
-              {corridor.hasNearbyPixelsAbove15Deg ? ' · nearby steep pixels' : ''}
+            <summary style={{ cursor: 'pointer', fontWeight: 600, fontSize: 14 }}>
+              {edgeId} — {buffer.reviewPriority.toLowerCase()} inspection priority
+              {buffer.hasNearbyPixelsAbove15Deg ? ' · steep pixels nearby' : ''}
             </summary>
-            <p style={{ margin: '9px 0', color: '#d5e6f2', lineHeight: 1.6 }}>
-              Check: {corridor.visualFactorsToCheck.map(describeVisualFactor).join('; ')}.
-              These are inspection questions, not confirmed obstacles.
-            </p>
-            <p style={{ margin: 0, color: '#b9cddd', fontSize: 12 }}>
-              Orthophoto review: pending. Buffer samples: {corridor.bufferValidPixels} valid
-              of {corridor.bufferSampledPixels} pixels. The model recorded
-              {' '}{corridor.modelBlockedCellCount} blocked grid cells for this corridor.
-            </p>
+            <div style={{ paddingTop: 8, lineHeight: 1.7, color: '#d5e6f2', fontSize: 13 }}>
+              <p style={{ margin: '5px 0' }}>
+                <strong>T-016 centerline:</strong> average slope {formatDegrees(centerline?.meanSlopeDeg ?? null)},
+                {' '}P95 {formatDegrees(centerline?.p95SlopeDeg ?? null)},
+                {' '}maximum {formatDegrees(centerline?.maxSlopeDeg ?? null)}.
+                {' '}Average elevation {formatElevation(centerline?.meanElevationM ?? null)}.
+              </p>
+              <p style={{ margin: '5px 0' }}>
+                <strong>Sampling:</strong> {centerline?.validJointPositions ?? 'unknown'} valid of
+                {' '}{centerline?.plannedPositions ?? 'unknown'} planned centerline positions;
+                {' '}{centerline?.uniqueValidCells ?? 'unknown'} unique valid source pixels.
+              </p>
+              <p style={{ margin: '5px 0' }}>
+                <strong>T-029 nearby terrain:</strong> strip maximum
+                {' '}{formatDegrees(buffer.bufferMaxSlopeDeg)},
+                {' '}{buffer.bufferPixelsAbove15DegPercent.toFixed(2)}% of buffer slope pixels above
+                {' '}15°. This percentage is not a percentage of the route length.
+              </p>
+              <p style={{ margin: '5px 0' }}>
+                <strong>Original routing model:</strong> mean 5×5-grid slope
+                {' '}{formatDegrees(buffer.modelMeanSlopeDeg)}, maximum sampled 5×5-grid cell
+                {' '}{formatDegrees(buffer.modelMaxSampledCellSlopeDeg)}.
+                {' '}These model values are not interchangeable with T-016 source-pixel statistics.
+              </p>
+              <p style={{ margin: '5px 0' }}>
+                <strong>Still requires visual review:</strong>
+                {' '}{buffer.visualFactorsToCheck.map(describeVisualFactor).join('; ')}.
+                {' '}These are inspection questions, not confirmed obstacles.
+              </p>
+            </div>
           </details>
         ))}
       </div>
 
       <p
         style={{
-          padding: 13,
-          margin: '18px 0 0',
+          padding: 14,
+          margin: '19px 0 0',
           borderRadius: 8,
           background: '#293745',
-          fontSize: 12,
-          lineHeight: 1.7,
+          fontSize: 13,
+          lineHeight: 1.65,
           color: '#e0eaf5',
         }}
       >
-        <strong>Research-only interpretation.</strong> The &gt;15° threshold is an
-        experimental project comparison, NOT a NASA EVA safety standard. The
-        percentages represent slope-raster pixels in the buffered area, NOT
-        percentages of route distance or confirmed hazards. Centerline model
-        cells and buffered-area pixels use different sampling methods.
-        Orthophoto obstacles, footing, equipment limits and astronaut safety
-        are not validated. The current Balanced Cost difficulty component is
-        derived from slope and is not independent obstacle evidence.
-        Source: team-derived HiRISE DTM slope raster, precomputed ±5 m screening.
+        <strong>Scientific limits.</strong> T-016 uses {comparison.sampleSpacingM} m positions
+        {' '}along the original polyline and computes statistics over unique valid ~1.01 m
+        {' '}raster pixels. T-029 screens nearby pixels in a ±5 m strip. A 100% centerline
+        {' '}coverage figure means that all planned centerline sample positions had valid
+        {' '}DTM and slope values; it does not mean 100% coverage of the corridor width.
+        {' '}The project’s 15° comparison is not an official NASA EVA threshold.
+        {' '}These measurements do not establish surface traction, obstacle clearance,
+        {' '}astronaut safety, or corridor approval. The original Balanced Cost difficulty
+        {' '}score remains a slope-derived proxy.
       </p>
     </section>
   );
