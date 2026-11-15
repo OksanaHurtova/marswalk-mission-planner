@@ -12,6 +12,7 @@ import VectorLayer from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
 import { Circle as CircleStyle, Fill, Stroke, Style, Text } from 'ol/style.js';
 import LayerControls, { type LayerVisibility, type MapLayerId } from './LayerControls';
+import { DEFAULT_SLOPE_TRANSPARENCY_PERCENT, normalizeTransparencyPercent, transparencyPercentToOpacity } from './slopeTransparency';
 import RouteOverlay, { type RouteGeometry } from './RouteOverlay';
 import 'ol/ol.css';
 
@@ -78,6 +79,16 @@ export default function MarsMap({
   });
   const visibleLayersRef = useRef<LayerVisibility>(visibleLayers);
   const rasterLayersRef = useRef<Partial<Record<MapLayerId, ImageLayer<ImageStatic>>>>({});
+  // T-021: this state changes only raster blending, never layer geometry.
+  const [slopeTransparencyPercent, setSlopeTransparencyPercent] = useState(DEFAULT_SLOPE_TRANSPARENCY_PERCENT);
+  const slopeTransparencyRef = useRef(slopeTransparencyPercent);
+
+  const handleSlopeTransparencyChange = (percent: number) => {
+    const next = normalizeTransparencyPercent(percent);
+    slopeTransparencyRef.current = next;
+    setSlopeTransparencyPercent(next);
+    rasterLayersRef.current['athabasca-slope']?.setOpacity(transparencyPercentToOpacity(next));
+  };
 
   const handleLayerToggle = (layerId: MapLayerId, visible: boolean) => {
     const next = { ...visibleLayersRef.current, [layerId]: visible };
@@ -186,7 +197,7 @@ export default function MarsMap({
 
       const slopeImageLayer = new ImageLayer({
         visible: visibleLayersRef.current['athabasca-slope'],
-        opacity: slopeConfig.opacity ?? 0.7,
+        opacity: transparencyPercentToOpacity(slopeTransparencyRef.current),
         source: new ImageStatic({
           url: slopeUrl,
           projection,
@@ -318,7 +329,12 @@ export default function MarsMap({
       }}
     >
       <div style={{ position: 'absolute', zIndex: 20, top: 12, right: 12 }}>
-        <LayerControls visible={visibleLayers} onToggle={handleLayerToggle} />
+        <LayerControls
+          visible={visibleLayers}
+          onToggle={handleLayerToggle}
+          slopeTransparencyPercent={slopeTransparencyPercent}
+          onSlopeTransparencyChange={handleSlopeTransparencyChange}
+        />
       </div>
       <div
         ref={containerRef}

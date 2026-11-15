@@ -7,6 +7,8 @@ export type LayerVisibility = Record<MapLayerId, boolean>;
 type LayerControlsProps = {
   visible: LayerVisibility;
   onToggle: (layerId: MapLayerId, visible: boolean) => void;
+  slopeTransparencyPercent: number;
+  onSlopeTransparencyChange: (percent: number) => void;
 };
 
 const items: { id: MapLayerId; title: string; hint: string }[] = [
@@ -22,9 +24,13 @@ const items: { id: MapLayerId; title: string; hint: string }[] = [
   },
 ];
 
-export default function LayerControls({ visible, onToggle }: LayerControlsProps) {
+export default function LayerControls({ visible, onToggle, slopeTransparencyPercent, onSlopeTransparencyChange }: LayerControlsProps) {
   const change = (id: MapLayerId) => (event: ChangeEvent<HTMLInputElement>) => {
     onToggle(id, event.target.checked);
+  };
+
+  const handleTransparency = (event: ChangeEvent<HTMLInputElement>) => {
+    onSlopeTransparencyChange(Number(event.currentTarget.value));
   };
 
   return (
@@ -57,6 +63,25 @@ export default function LayerControls({ visible, onToggle }: LayerControlsProps)
           </span>
         </label>
       ))}
+      <div style={{ borderTop: '1px solid #475569', paddingTop: 10, marginTop: 3, marginBottom: 10 }}>
+        <label htmlFor="slope-transparency" style={{ display: 'block', fontWeight: 700, marginBottom: 5 }}>
+          Прозорість карти нахилів: {slopeTransparencyPercent}%
+        </label>
+        <input
+          id="slope-transparency"
+          type="range"
+          min={0}
+          max={100}
+          step={5}
+          value={slopeTransparencyPercent}
+          disabled={!visible['athabasca-slope']}
+          onChange={handleTransparency}
+          style={{ display: 'block', width: '100%', accentColor: '#ffbd55', cursor: visible['athabasca-slope'] ? 'pointer' : 'not-allowed' }}
+        />
+        <small style={{ display: 'block', color: '#cbd5e1', marginTop: 4, lineHeight: 1.4 }}>
+          0% — повністю видимий slope; 100% — повністю прозорий. Це лише візуалізація.
+        </small>
+      </div>
       <div style={{ borderTop: '1px solid #475569', paddingTop: 8, color: '#cbd5e1', fontSize: 11, lineHeight: 1.5 }}>
         <strong style={{ color: '#fff' }}>Нахил:</strong>
         <div><span style={{ color: '#2d9e99' }}>■</span> 0–5° · <span style={{ color: '#ecc74e' }}>■</span> 5–10°</div>
