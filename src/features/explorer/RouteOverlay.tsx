@@ -9,7 +9,8 @@ import { Circle as CircleStyle, Fill, RegularShape, Stroke, Style, Text } from '
 
 // Exact coordinate shape of Ania's RouteResult.geometry: XY[] where XY = [number, number].
 // The planner owns routing; this component only draws the returned coordinates.
-export type RouteGeometry = readonly (readonly [number, number])[];
+import type { RouteGeometry } from '../../shared/types';
+export type { RouteGeometry } from '../../shared/types';
 
 type RouteOverlayProps = {
   map: Map | null;

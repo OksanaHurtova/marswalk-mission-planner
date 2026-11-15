@@ -14,10 +14,13 @@ import VectorSource from 'ol/source/Vector.js';
 import { Circle as CircleStyle, Fill, Stroke, Style, Text } from 'ol/style.js';
 import LayerControls, { type LayerVisibility, type MapLayerId } from './LayerControls';
 import { DEFAULT_SLOPE_TRANSPARENCY_PERCENT, normalizeTransparencyPercent, transparencyPercentToOpacity } from './slopeTransparency';
-import RouteOverlay, { type RouteGeometry } from './RouteOverlay';
+import RouteOverlay from './RouteOverlay';
+import type { MarsMapProps, ScientificPoint } from '../../shared/types';
 import MapLegend from './MapLegend';
 import 'ol/ol.css';
 import './MarsMapLayout.css';
+
+export type { ScientificPoint } from '../../shared/types';
 
 type Extent = [number, number, number, number];
 
@@ -41,22 +44,9 @@ type LayersConfig = {
   layers: LayerConfig[];
 };
 
-// Тимчасовий контракт T-009; узгодити зі спільним src/shared/types.ts в T-053.
-export type ScientificPoint = {
-  id: string;
-  name: string;
-  localXY_m: [number, number];
-  status?: string;
-};
 
 const EMPTY_POINTS: ScientificPoint[] = [];
 
-type MarsMapProps = {
-  points?: ScientificPoint[];
-  onSelectTarget?: (pointId: string) => void;
-  routeGeometry?: RouteGeometry | null;
-  selectedTargetId?: string | null;
-};
 
 export default function MarsMap({
   points = EMPTY_POINTS,
