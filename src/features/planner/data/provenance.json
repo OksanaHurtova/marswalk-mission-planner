@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 1,
+  "regionId": "athabasca_candidate_11",
+  "description": "Scientific and GIS provenance for preliminary Marswalk science stops and annotated routing edges.",
+  "scientificLimitations": [
+    "POI locations and route corridors are project annotations, not NASA mission plans.",
+    "A source link establishes dataset provenance, not a scientific proof of the terrain interpretation.",
+    "15 degrees is a prototype threshold, not an official NASA EVA safety limit.",
+    "Some team handoff files referenced by network.json are not committed to this repository; check their availability before independently reproducing route construction."
+  ],
+  "sources": {
+    "HIRISE_ORTHO": {
+      "type": "NASA_ORBITAL_PRODUCT",
+      "title": "HiRISE orthophoto — Athabasca Valles Distributary Channel",
+      "publisher": "NASA/JPL-Caltech/University of Arizona",
+      "productId": "ESP_035191_1880_RED_C_01_ORTHO",
+      "url": "https://www.uahirise.org/dtm/ESP_035191_1880",
+      "availability": "PUBLIC_PRODUCT_PAGE",
+      "role": "Image evidence for preliminary local observations; not proof of composition, route traversability or approved POI positions."
+    },
+    "HIRISE_DTM": {
+      "type": "NASA_ORBITAL_PRODUCT",
+      "title": "HiRISE stereo Digital Terrain Model — Athabasca Valles Distributary Channel",
+      "publisher": "NASA/JPL-Caltech/University of Arizona",
+      "productId": "DTEEC_035191_1880_036457_1880_A01",
+      "url": "https://www.uahirise.org/dtm/ESP_035191_1880",
+      "derivedLocalAsset": "candidate11_dtm.tif",
+      "availability": "PUBLIC_PRODUCT_PAGE",
+      "role": "Terrain elevation source. Local crop and its pixel-level processing are team-derived."
+    },
+    "HIRISE_SLOPE": {
+      "type": "DERIVED_GIS_PRODUCT",
+      "title": "Terrain slope in degrees, derived from HiRISE DTM",
+      "publisher": "Marswalk project team",
+      "derivedFrom": [
+        "HIRISE_DTM"
+      ],
+      "derivedLocalAsset": "candidate11_slope_deg.tif",
+      "url": "https://www.uahirise.org/dtm/ESP_035191_1880",
+      "availability": "PARENT_PRODUCT_PUBLIC_LOCAL_RASTER_NOT_TRACKED",
+      "role": "Project-calculated slope; not an independent NASA hazard or astronaut-safety classification."
+    },
+    "T028_REPORT": {
+      "type": "TEAM_HANDOFF",
+      "title": "Candidate corridor verification and raster calculations",
+      "publisher": "Marswalk project team",
+      "asset": "Marswalk_T028_S_verification_for_Ania.zip",
+      "availability": "TEAM_HANDOFF_NOT_TRACKED_IN_REPOSITORY",
+      "role": "Internal numerical routing evidence; not a public NASA source."
+    },
+    "T028_P04_MAX_CSV": {
+      "type": "TEAM_HANDOFF",
+      "title": "P04 conservative maximum-slope corridor candidate",
+      "publisher": "Marswalk project team",
+      "asset": "route_S_P04_max_15deg_5m_EXPERIMENTAL.csv",
+      "availability": "TEAM_HANDOFF_NOT_TRACKED_IN_REPOSITORY",
+      "role": "Internal path-construction input; candidate only."
+    },
+    "T028_P04_MEAN_CSV": {
+      "type": "TEAM_HANDOFF",
+      "title": "P04 shorter mean-slope alternative candidate",
+      "publisher": "Marswalk project team",
+      "asset": "route_S_P04_mean_15deg_5m_EXPERIMENTAL.csv",
+      "availability": "TEAM_HANDOFF_NOT_TRACKED_IN_REPOSITORY",
+      "role": "Internal path-construction input; not an enabled or approved traverse."
+    },
+    "P01_SCREENING": {
+      "type": "PROJECT_SCREENING_REPORT",
+      "title": "P01 — project corridor terrain and orthophoto review",
+      "publisher": "Marswalk project team",
+      "path": "docs/science/p01/P01_corridor_evidence.md",
+      "availability": "VERSION_CONTROLLED_PROJECT_FILE",
+      "role": "Derived terrain screening and candidate review, not final human EVA approval."
+    },
+    "P02_SCREENING": {
+      "type": "PROJECT_SCREENING_REPORT",
+      "title": "P02 — project corridor terrain and orthophoto review",
+      "publisher": "Marswalk project team",
+      "path": "docs/science/p02/P02_corridor_evidence.md",
+      "availability": "VERSION_CONTROLLED_PROJECT_FILE",
+      "role": "Derived terrain screening and candidate review, not final human EVA approval."
+    },
+    "P03_SCREENING": {
+      "type": "PROJECT_SCREENING_REPORT",
+      "title": "P03 — project corridor terrain and orthophoto review",
+      "publisher": "Marswalk project team",
+      "path": "docs/science/p03/P03_corridor_evidence.md",
+      "availability": "VERSION_CONTROLLED_PROJECT_FILE",
+      "role": "Derived terrain screening and candidate review, not final human EVA approval."
+    },
+    "P04_SCREENING": {
+      "type": "PROJECT_SCREENING_REPORT",
+      "title": "P04 — project corridor terrain and orthophoto review",
+      "publisher": "Marswalk project team",
+      "path": "docs/science/p04/P04_corridor_evidence.md",
+      "availability": "VERSION_CONTROLLED_PROJECT_FILE",
+      "role": "Derived terrain screening and candidate review, not final human EVA approval."
+    }
+  },
+  "pois": {
+    "P01": {
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "P01_SCREENING"
+      ],
+      "status": "PRELIMINARY_TEAM_ANNOTATION",
+      "interpretation": "The target location and scientific objective are proposed by the team, not supplied or approved by NASA."
+    },
+    "P02": {
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "P02_SCREENING"
+      ],
+      "status": "PRELIMINARY_TEAM_ANNOTATION",
+      "interpretation": "The target location and scientific objective are proposed by the team, not supplied or approved by NASA."
+    },
+    "P03": {
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "P03_SCREENING"
+      ],
+      "status": "PRELIMINARY_TEAM_ANNOTATION",
+      "interpretation": "The target location and scientific objective are proposed by the team, not supplied or approved by NASA."
+    },
+    "P04": {
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "P04_SCREENING"
+      ],
+      "status": "PRELIMINARY_TEAM_ANNOTATION",
+      "interpretation": "The target location and scientific objective are proposed by the team, not supplied or approved by NASA."
+    }
+  },
+  "edges": {
+    "P01_C1": {
+      "from": "S",
+      "to": "W01",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "P01_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P01_C2": {
+      "from": "W01",
+      "to": "W02",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "P01_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P01_C3": {
+      "from": "W02",
+      "to": "P01",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "P01_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P02_C1": {
+      "from": "S",
+      "to": "W03",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "P02_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P02_C2": {
+      "from": "W03",
+      "to": "W04",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "P02_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P02_C3": {
+      "from": "W04",
+      "to": "P02",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "P02_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P03_C1": {
+      "from": "S",
+      "to": "W05",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "P03_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P03_C2": {
+      "from": "W05",
+      "to": "W06",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "P03_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P03_C3": {
+      "from": "W06",
+      "to": "P03",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "P03_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P04_C1": {
+      "from": "S",
+      "to": "W07",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MAX_CSV",
+        "P04_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P04_C2": {
+      "from": "W07",
+      "to": "W08",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MAX_CSV",
+        "P04_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P04_C3": {
+      "from": "W08",
+      "to": "W09",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MAX_CSV",
+        "P04_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P04_C4": {
+      "from": "W09",
+      "to": "W10",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MAX_CSV",
+        "P04_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P04_C5": {
+      "from": "W10",
+      "to": "W11",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MAX_CSV",
+        "P04_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P04_C6": {
+      "from": "W11",
+      "to": "P04",
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MAX_CSV",
+        "P04_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    },
+    "P04_MEAN_ALTERNATIVE": {
+      "from": "S",
+      "to": "P04",
+      "enabled": false,
+      "sourceIds": [
+        "HIRISE_ORTHO",
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MEAN_CSV",
+        "P04_SCREENING"
+      ],
+      "status": "PRELIMINARY_ROUTE_CORRIDOR",
+      "interpretation": "Geometry and slope statistics are team-derived from the published HiRISE products; orthophoto review is not EVA-safety approval."
+    }
+  }
+}

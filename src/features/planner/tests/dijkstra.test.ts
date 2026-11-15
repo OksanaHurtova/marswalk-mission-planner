@@ -52,6 +52,25 @@ describe("Dijkstra", () => {
     expect(result).toEqual(["SA", "AT"]);
   });
 
+  it("finds a route to a different target", () => {
+    const differentTargetGraph = {
+      ...mockNetwork,
+      edges: mockNetwork.edges.map((edge) => ({
+        ...edge,
+        enabled: edge.id === "SA",
+      })),
+    };
+
+    const result = dijkstra(
+      differentTargetGraph,
+      "S",
+      "A",
+      false
+    );
+
+    expect(result).toEqual(["SA"]);
+  });
+
   it("returns an empty route when start equals target", () => {
     const result = dijkstra(
       mockNetwork,
