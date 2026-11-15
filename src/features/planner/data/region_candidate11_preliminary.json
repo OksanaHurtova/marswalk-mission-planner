@@ -1,0 +1,57 @@
+
+{
+  "id": "athabasca_candidate_11",
+  "status": "CANDIDATE_PENDING_SCIENCE_AND_SLOPE_VALIDATION",
+  "name": "Athabasca Valles Distributary Channel — Candidate 11",
+  "crs": "Equirectangular MARS",
+  "units": "metres",
+  "projectedExtentApproxM": {
+    "minX": -847.995199,
+    "minY": 475629.2382,
+    "maxX": 1652.004801,
+    "maxY": 478129.2382
+  },
+  "extentNote": "Preliminary projected extent. Confirm exact vertices against the QGIS GeoPackage before final approval.",
+  "sideLengthM": 2500,
+  "areaKm2": 6.25,
+  "localXY": {
+    "originProjectedXY": [
+      -847.995199,
+      475629.2382
+    ],
+    "xPositive": "east",
+    "yPositive": "north",
+    "units": "metres"
+  },
+  "dataSources": {
+    "NASA_HiRISE_DTM": "https://www.uahirise.org/dtm/ESP_035191_1880",
+    "NASA_HiRISE_ortho": "https://www.uahirise.org/ESP_035191_1880",
+    "USGS_SIM3477": "https://pubs.usgs.gov/publication/sim3477"
+  },
+  "rasterResult": {
+    "clipRasterPixelsX": 2473,
+    "clipRasterPixelsY": 2473,
+    "clipPixelSizeMApprox": 1.0114789242588,
+    "booleanTrueCount": 6108312,
+    "booleanFalseCount": 7417,
+    "booleanTotalCount": 6115729,
+    "booleanNoDataCount": 0,
+    "note": "Boolean raster counts cover the processed raster extent, not necessarily the exact study polygon. In-polygon DTM validity is still pending verification."
+  },
+  "slopeRasterPath": null,
+  "finalRegionApproved": false,
+  "webMapImage": {
+    "path": "athabasca_candidate11_base_2048.webp",
+    "sourceImage": "ESP_035191_1880_RED_A_01_ORTHO.JP2",
+    "imageSizePx": [2048, 2048],
+    "projection": "Equirectangular MARS",
+    "imageWorldExtent": [
+      -847.995199,
+      475629.2382,
+      1652.004801,
+      478129.2382
+    ],
+    "imageAxes": "Pixel (0,0) is at top-left (minX, maxY); X increases rightward and pixel Y increases downward.",
+    "notes": "Reduced-resolution display image. For an OpenLayers map using local coordinates, use image extent [0, 0, 2500, 2500]."
+  }
+}

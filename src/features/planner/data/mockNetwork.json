@@ -1,0 +1,88 @@
+
+{
+  "nodes": [
+    {
+      "id": "S",
+      "coordinates": [0, 0]
+    },
+    {
+      "id": "A",
+      "coordinates": [100, 0]
+    },
+    {
+      "id": "B",
+      "coordinates": [100, 75]
+    },
+    {
+      "id": "T",
+      "coordinates": [200, 0]
+    }
+  ],
+  "edges": [
+    {
+      "id": "SA",
+      "from": "S",
+      "to": "A",
+      "geometry": [
+        [0, 0],
+        [100, 0]
+      ],
+      "lengthM": 100,
+      "difficultyScore": 1,
+      "slopeScore": null,
+      "slopeDegrees": null,
+      "enabled": true,
+      "annotation": "MOCK DATA: Higher-difficulty terrain corridor.",
+      "sourceIds": []
+    },
+    {
+      "id": "AT",
+      "from": "A",
+      "to": "T",
+      "geometry": [
+        [100, 0],
+        [200, 0]
+      ],
+      "lengthM": 100,
+      "difficultyScore": 1,
+      "slopeScore": null,
+      "slopeDegrees": null,
+      "enabled": true,
+      "annotation": "MOCK DATA: Higher-difficulty terrain corridor.",
+      "sourceIds": []
+    },
+    {
+      "id": "SB",
+      "from": "S",
+      "to": "B",
+      "geometry": [
+        [0, 0],
+        [100, 75]
+      ],
+      "lengthM": 125,
+      "difficultyScore": 0,
+      "slopeScore": null,
+      "slopeDegrees": null,
+      "enabled": true,
+      "annotation": "MOCK DATA: Lower-difficulty terrain corridor.",
+      "sourceIds": []
+    },
+    {
+      "id": "BT",
+      "from": "B",
+      "to": "T",
+      "geometry": [
+        [100, 75],
+        [200, 0]
+      ],
+      "lengthM": 125,
+      "difficultyScore": 0,
+      "slopeScore": null,
+      "slopeDegrees": null,
+      "enabled": true,
+      "annotation": "MOCK DATA: Lower-difficulty terrain corridor.",
+      "sourceIds": []
+    }
+  ]
+}
+

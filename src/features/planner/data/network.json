@@ -1,0 +1,1867 @@
+{
+  "regionId": "athabasca_candidate_11",
+  "status": "EXPERIMENTAL_CANDIDATE_GRAPH",
+  "coordinateFrame": "MARS_LOCAL_METERS",
+  "extent": [
+    0,
+    0,
+    2500,
+    2500
+  ],
+  "validation": {
+    "finalRouteApproval": false,
+    "orthophotoCorridorsReviewed": false,
+    "slopeGridCellPixels": 5,
+    "approxGridCellSizeM": 5.0574,
+    "experimentalMaxSlopeThresholdDeg": 15,
+    "thresholdIsNASASafetyStandard": false,
+    "edgeDifficultyMethod": "p95(maximum slope of 5x5 source raster pixels) / 15, capped at 1 (provisional terrain-only proxy)",
+    "edgeSlopeDegreesMethod": "mean source-pixel slope averaged over traversed 5x5 grid cells",
+    "slopeScoreMethod": "edgeSlopeDegrees / 15, capped at 1",
+    "routeModel": "8-connected A* minimum-distance grid; prevents diagonal corner cutting",
+    "routeApproval": "All enabled edges are research candidates, not approved EVA corridors"
+  },
+  "sources": {
+    "HIRISE_DTM": "candidate11_dtm.tif: NASA HiRISE DTM crop",
+    "HIRISE_SLOPE": "candidate11_slope_deg.tif: GDAL-derived slope in degrees",
+    "T028_REPORT": "Marswalk_T028_S_verification_for_Ania.zip and verified raster measurements",
+    "T028_P04_MAX_CSV": "route_S_P04_max_15deg_5m_EXPERIMENTAL.csv",
+    "T028_P04_MEAN_CSV": "route_S_P04_mean_15deg_5m_EXPERIMENTAL.csv"
+  },
+  "nodes": [
+    {
+      "id": "S",
+      "coordinates": [
+        697.9952,
+        1640.7618
+      ],
+      "kind": "START",
+      "status": "PRELIMINARY"
+    },
+    {
+      "id": "P01",
+      "coordinates": [
+        417.9952,
+        1220.7618
+      ],
+      "kind": "SCIENCE_TARGET",
+      "status": "PRELIMINARY"
+    },
+    {
+      "id": "P02",
+      "coordinates": [
+        517.9952,
+        2040.7618
+      ],
+      "kind": "SCIENCE_TARGET",
+      "status": "PRELIMINARY"
+    },
+    {
+      "id": "P03",
+      "coordinates": [
+        972.9952,
+        1395.7618
+      ],
+      "kind": "SCIENCE_TARGET",
+      "status": "PRELIMINARY"
+    },
+    {
+      "id": "P04",
+      "coordinates": [
+        2012.9952,
+        1435.7618
+      ],
+      "kind": "SCIENCE_TARGET",
+      "status": "PRELIMINARY"
+    },
+    {
+      "id": "W01",
+      "coordinates": [
+        568.3213,
+        1507.1171
+      ],
+      "kind": "WAYPOINT",
+      "status": "EXPERIMENTAL"
+    },
+    {
+      "id": "W02",
+      "coordinates": [
+        431.7716,
+        1395.8545
+      ],
+      "kind": "WAYPOINT",
+      "status": "EXPERIMENTAL"
+    },
+    {
+      "id": "W03",
+      "coordinates": [
+        639.1248,
+        1775.1591
+      ],
+      "kind": "WAYPOINT",
+      "status": "EXPERIMENTAL"
+    },
+    {
+      "id": "W04",
+      "coordinates": [
+        578.4361,
+        1911.7087
+      ],
+      "kind": "WAYPOINT",
+      "status": "EXPERIMENTAL"
+    },
+    {
+      "id": "W05",
+      "coordinates": [
+        795.9041,
+        1542.5189
+      ],
+      "kind": "WAYPOINT",
+      "status": "EXPERIMENTAL"
+    },
+    {
+      "id": "W06",
+      "coordinates": [
+        871.765,
+        1441.371
+      ],
+      "kind": "WAYPOINT",
+      "status": "EXPERIMENTAL"
+    },
+    {
+      "id": "W07",
+      "coordinates": [
+        699.8136,
+        1137.9273
+      ],
+      "kind": "WAYPOINT",
+      "status": "EXPERIMENTAL"
+    },
+    {
+      "id": "W08",
+      "coordinates": [
+        679.584,
+        662.5322
+      ],
+      "kind": "WAYPOINT",
+      "status": "EXPERIMENTAL"
+    },
+    {
+      "id": "W09",
+      "coordinates": [
+        932.4537,
+        834.4837
+      ],
+      "kind": "WAYPOINT",
+      "status": "EXPERIMENTAL"
+    },
+    {
+      "id": "W10",
+      "coordinates": [
+        1246.0122,
+        1117.6978
+      ],
+      "kind": "WAYPOINT",
+      "status": "EXPERIMENTAL"
+    },
+    {
+      "id": "W11",
+      "coordinates": [
+        1645.5464,
+        1304.8214
+      ],
+      "kind": "WAYPOINT",
+      "status": "EXPERIMENTAL"
+    }
+  ],
+  "edges": [
+    {
+      "id": "P01_C1",
+      "from": "S",
+      "to": "W01",
+      "geometry": [
+        [
+          697.9952,
+          1640.7618
+        ],
+        [
+          699.8136,
+          1638.6094
+        ],
+        [
+          568.3213,
+          1507.1171
+        ]
+      ],
+      "lengthM": 188.7759,
+      "difficultyScore": 0.4637,
+      "slopeScore": 0.1634,
+      "slopeDegrees": 2.4512,
+      "maxCellSlopeDeg": 9.037,
+      "p95CellMaxSlopeDeg": 6.956,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 27,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P01_C2",
+      "from": "W01",
+      "to": "W02",
+      "geometry": [
+        [
+          568.3213,
+          1507.1171
+        ],
+        [
+          462.116,
+          1400.9119
+        ],
+        [
+          431.7716,
+          1400.9119
+        ],
+        [
+          431.7716,
+          1395.8545
+        ]
+      ],
+      "lengthM": 185.5987,
+      "difficultyScore": 0.6138,
+      "slopeScore": 0.1987,
+      "slopeDegrees": 2.9807,
+      "maxCellSlopeDeg": 13.782,
+      "p95CellMaxSlopeDeg": 9.207,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 29,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P01_C3",
+      "from": "W02",
+      "to": "P01",
+      "geometry": [
+        [
+          431.7716,
+          1395.8545
+        ],
+        [
+          431.7716,
+          1340.2231
+        ],
+        [
+          426.7142,
+          1335.1657
+        ],
+        [
+          426.7142,
+          1239.0752
+        ],
+        [
+          421.6569,
+          1234.0178
+        ],
+        [
+          421.6569,
+          1223.903
+        ],
+        [
+          416.5995,
+          1218.8457
+        ],
+        [
+          417.9952,
+          1220.7618
+        ]
+      ],
+      "lengthM": 185.6638,
+      "difficultyScore": 0.8077,
+      "slopeScore": 0.2357,
+      "slopeDegrees": 3.5356,
+      "maxCellSlopeDeg": 14.117,
+      "p95CellMaxSlopeDeg": 12.115,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 36,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P02_C1",
+      "from": "S",
+      "to": "W03",
+      "geometry": [
+        [
+          697.9952,
+          1640.7618
+        ],
+        [
+          699.8136,
+          1638.6094
+        ],
+        [
+          699.8136,
+          1643.6668
+        ],
+        [
+          694.7562,
+          1648.7242
+        ],
+        [
+          694.7562,
+          1658.839
+        ],
+        [
+          689.6988,
+          1663.8964
+        ],
+        [
+          689.6988,
+          1668.9538
+        ],
+        [
+          684.6414,
+          1674.0112
+        ],
+        [
+          684.6414,
+          1679.0686
+        ],
+        [
+          679.584,
+          1684.126
+        ],
+        [
+          679.584,
+          1689.1834
+        ],
+        [
+          674.5266,
+          1694.2408
+        ],
+        [
+          674.5266,
+          1699.2981
+        ],
+        [
+          669.4692,
+          1704.3555
+        ],
+        [
+          669.4692,
+          1714.4703
+        ],
+        [
+          664.4118,
+          1719.5277
+        ],
+        [
+          664.4118,
+          1724.5851
+        ],
+        [
+          659.3544,
+          1729.6425
+        ],
+        [
+          659.3544,
+          1734.6999
+        ],
+        [
+          654.297,
+          1739.7573
+        ],
+        [
+          654.297,
+          1744.8147
+        ],
+        [
+          649.2396,
+          1749.8721
+        ],
+        [
+          649.2396,
+          1754.9295
+        ],
+        [
+          644.1822,
+          1759.9869
+        ],
+        [
+          644.1822,
+          1770.1017
+        ],
+        [
+          639.1248,
+          1775.1591
+        ]
+      ],
+      "lengthM": 164.5055,
+      "difficultyScore": 0.6005,
+      "slopeScore": 0.1684,
+      "slopeDegrees": 2.5253,
+      "maxCellSlopeDeg": 13.776,
+      "p95CellMaxSlopeDeg": 9.008,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 28,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P02_C2",
+      "from": "W03",
+      "to": "W04",
+      "geometry": [
+        [
+          639.1248,
+          1775.1591
+        ],
+        [
+          639.1248,
+          1780.2165
+        ],
+        [
+          634.0674,
+          1785.2739
+        ],
+        [
+          634.0674,
+          1790.3312
+        ],
+        [
+          629.01,
+          1795.3886
+        ],
+        [
+          629.01,
+          1800.446
+        ],
+        [
+          623.9526,
+          1805.5034
+        ],
+        [
+          623.9526,
+          1810.5608
+        ],
+        [
+          618.8952,
+          1815.6182
+        ],
+        [
+          618.8952,
+          1825.733
+        ],
+        [
+          613.8379,
+          1830.7904
+        ],
+        [
+          613.8379,
+          1835.8478
+        ],
+        [
+          608.7805,
+          1840.9052
+        ],
+        [
+          608.7805,
+          1845.9626
+        ],
+        [
+          603.7231,
+          1851.02
+        ],
+        [
+          603.7231,
+          1856.0774
+        ],
+        [
+          598.6657,
+          1861.1348
+        ],
+        [
+          598.6657,
+          1866.1922
+        ],
+        [
+          593.6083,
+          1871.2496
+        ],
+        [
+          593.6083,
+          1881.3644
+        ],
+        [
+          588.5509,
+          1886.4217
+        ],
+        [
+          588.5509,
+          1891.4791
+        ],
+        [
+          583.4935,
+          1896.5365
+        ],
+        [
+          583.4935,
+          1906.6513
+        ],
+        [
+          578.4361,
+          1911.7087
+        ]
+      ],
+      "lengthM": 161.6877,
+      "difficultyScore": 0.479,
+      "slopeScore": 0.1575,
+      "slopeDegrees": 2.3621,
+      "maxCellSlopeDeg": 10.492,
+      "p95CellMaxSlopeDeg": 7.185,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 28,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P02_C3",
+      "from": "W04",
+      "to": "P02",
+      "geometry": [
+        [
+          578.4361,
+          1911.7087
+        ],
+        [
+          573.3787,
+          1916.7661
+        ],
+        [
+          573.3787,
+          1921.8235
+        ],
+        [
+          568.3213,
+          1926.8809
+        ],
+        [
+          568.3213,
+          1936.9957
+        ],
+        [
+          563.2639,
+          1942.0531
+        ],
+        [
+          563.2639,
+          1947.1105
+        ],
+        [
+          558.2065,
+          1952.1679
+        ],
+        [
+          558.2065,
+          1957.2253
+        ],
+        [
+          553.1491,
+          1962.2827
+        ],
+        [
+          553.1491,
+          1967.3401
+        ],
+        [
+          548.0917,
+          1972.3975
+        ],
+        [
+          548.0917,
+          1977.4549
+        ],
+        [
+          543.0343,
+          1982.5122
+        ],
+        [
+          543.0343,
+          1992.627
+        ],
+        [
+          537.9769,
+          1997.6844
+        ],
+        [
+          537.9769,
+          2002.7418
+        ],
+        [
+          532.9195,
+          2007.7992
+        ],
+        [
+          532.9195,
+          2012.8566
+        ],
+        [
+          527.8621,
+          2017.914
+        ],
+        [
+          527.8621,
+          2022.9714
+        ],
+        [
+          522.8047,
+          2028.0288
+        ],
+        [
+          522.8047,
+          2038.1436
+        ],
+        [
+          517.7474,
+          2043.201
+        ],
+        [
+          517.9952,
+          2040.7618
+        ]
+      ],
+      "lengthM": 159.0821,
+      "difficultyScore": 0.5772,
+      "slopeScore": 0.1703,
+      "slopeDegrees": 2.5551,
+      "maxCellSlopeDeg": 9.52,
+      "p95CellMaxSlopeDeg": 8.659,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 27,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P03_C1",
+      "from": "S",
+      "to": "W05",
+      "geometry": [
+        [
+          697.9952,
+          1640.7618
+        ],
+        [
+          699.8136,
+          1638.6094
+        ],
+        [
+          795.9041,
+          1542.5189
+        ]
+      ],
+      "lengthM": 138.7102,
+      "difficultyScore": 0.4199,
+      "slopeScore": 0.1513,
+      "slopeDegrees": 2.2693,
+      "maxCellSlopeDeg": 6.552,
+      "p95CellMaxSlopeDeg": 6.298,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 20,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P03_C2",
+      "from": "W05",
+      "to": "W06",
+      "geometry": [
+        [
+          795.9041,
+          1542.5189
+        ],
+        [
+          836.3632,
+          1502.0598
+        ],
+        [
+          836.3632,
+          1476.7728
+        ],
+        [
+          861.6502,
+          1451.4858
+        ],
+        [
+          861.6502,
+          1446.4284
+        ],
+        [
+          866.7076,
+          1446.4284
+        ],
+        [
+          871.765,
+          1441.371
+        ]
+      ],
+      "lengthM": 135.5331,
+      "difficultyScore": 0.8198,
+      "slopeScore": 0.2736,
+      "slopeDegrees": 4.1038,
+      "maxCellSlopeDeg": 13.578,
+      "p95CellMaxSlopeDeg": 12.298,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 22,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P03_C3",
+      "from": "W06",
+      "to": "P03",
+      "geometry": [
+        [
+          871.765,
+          1441.371
+        ],
+        [
+          876.8224,
+          1441.371
+        ],
+        [
+          881.8798,
+          1436.3136
+        ],
+        [
+          886.9372,
+          1436.3136
+        ],
+        [
+          891.9946,
+          1431.2562
+        ],
+        [
+          897.052,
+          1431.2562
+        ],
+        [
+          907.1667,
+          1421.1414
+        ],
+        [
+          912.2241,
+          1421.1414
+        ],
+        [
+          932.4537,
+          1400.9119
+        ],
+        [
+          932.4537,
+          1390.7971
+        ],
+        [
+          942.5685,
+          1390.7971
+        ],
+        [
+          942.5685,
+          1395.8545
+        ],
+        [
+          972.9129,
+          1395.8545
+        ],
+        [
+          972.9952,
+          1395.7618
+        ]
+      ],
+      "lengthM": 133.2028,
+      "difficultyScore": 0.9235,
+      "slopeScore": 0.3262,
+      "slopeDegrees": 4.8928,
+      "maxCellSlopeDeg": 14.304,
+      "p95CellMaxSlopeDeg": 13.852,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 24,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P04_C1",
+      "from": "S",
+      "to": "W07",
+      "geometry": [
+        [
+          697.9952,
+          1640.7618
+        ],
+        [
+          699.8136,
+          1638.6094
+        ],
+        [
+          699.8136,
+          1137.9273
+        ]
+      ],
+      "lengthM": 503.4998,
+      "difficultyScore": 0.5381,
+      "slopeScore": 0.1762,
+      "slopeDegrees": 2.6424,
+      "maxCellSlopeDeg": 10.453,
+      "p95CellMaxSlopeDeg": 8.072,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 100,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MAX_CSV"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P04_C2",
+      "from": "W07",
+      "to": "W08",
+      "geometry": [
+        [
+          699.8136,
+          1137.9273
+        ],
+        [
+          699.8136,
+          1072.1812
+        ],
+        [
+          694.7562,
+          1067.1238
+        ],
+        [
+          694.7562,
+          1057.009
+        ],
+        [
+          699.8136,
+          1051.9516
+        ],
+        [
+          699.8136,
+          960.9185
+        ],
+        [
+          694.7562,
+          960.9185
+        ],
+        [
+          694.7562,
+          839.5411
+        ],
+        [
+          689.6988,
+          834.4837
+        ],
+        [
+          689.6988,
+          824.3689
+        ],
+        [
+          699.8136,
+          814.2541
+        ],
+        [
+          699.8136,
+          713.1062
+        ],
+        [
+          674.5266,
+          687.8192
+        ],
+        [
+          674.5266,
+          667.5896
+        ],
+        [
+          679.584,
+          662.5322
+        ]
+      ],
+      "lengthM": 503.4958,
+      "difficultyScore": 0.8374,
+      "slopeScore": 0.2622,
+      "slopeDegrees": 3.933,
+      "maxCellSlopeDeg": 14.453,
+      "p95CellMaxSlopeDeg": 12.561,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 96,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MAX_CSV"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P04_C3",
+      "from": "W08",
+      "to": "W09",
+      "geometry": [
+        [
+          679.584,
+          662.5322
+        ],
+        [
+          684.6414,
+          657.4748
+        ],
+        [
+          684.6414,
+          647.3601
+        ],
+        [
+          709.9284,
+          622.0731
+        ],
+        [
+          709.9284,
+          606.9009
+        ],
+        [
+          714.9857,
+          606.9009
+        ],
+        [
+          714.9857,
+          601.8435
+        ],
+        [
+          720.0431,
+          601.8435
+        ],
+        [
+          720.0431,
+          586.6713
+        ],
+        [
+          740.2727,
+          586.6713
+        ],
+        [
+          745.3301,
+          581.6139
+        ],
+        [
+          745.3301,
+          576.5565
+        ],
+        [
+          775.6745,
+          576.5565
+        ],
+        [
+          800.9615,
+          601.8435
+        ],
+        [
+          800.9615,
+          642.3027
+        ],
+        [
+          806.0188,
+          647.3601
+        ],
+        [
+          806.0188,
+          672.647
+        ],
+        [
+          821.191,
+          687.8192
+        ],
+        [
+          821.191,
+          692.8766
+        ],
+        [
+          861.6502,
+          733.3358
+        ],
+        [
+          861.6502,
+          753.5653
+        ],
+        [
+          866.7076,
+          758.6227
+        ],
+        [
+          866.7076,
+          773.7949
+        ],
+        [
+          881.8798,
+          788.9671
+        ],
+        [
+          907.1667,
+          788.9671
+        ],
+        [
+          927.3963,
+          809.1967
+        ],
+        [
+          927.3963,
+          819.3115
+        ],
+        [
+          932.4537,
+          824.3689
+        ],
+        [
+          932.4537,
+          834.4837
+        ]
+      ],
+      "lengthM": 499.0083,
+      "difficultyScore": 0.9474,
+      "slopeScore": 0.3007,
+      "slopeDegrees": 4.5102,
+      "maxCellSlopeDeg": 14.705,
+      "p95CellMaxSlopeDeg": 14.211,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 86,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MAX_CSV"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P04_C4",
+      "from": "W09",
+      "to": "W10",
+      "geometry": [
+        [
+          932.4537,
+          834.4837
+        ],
+        [
+          942.5685,
+          844.5984
+        ],
+        [
+          942.5685,
+          915.402
+        ],
+        [
+          947.6259,
+          920.4594
+        ],
+        [
+          967.8555,
+          920.4594
+        ],
+        [
+          988.0851,
+          940.6889
+        ],
+        [
+          988.0851,
+          950.8037
+        ],
+        [
+          993.1425,
+          955.8611
+        ],
+        [
+          993.1425,
+          960.9185
+        ],
+        [
+          1013.372,
+          960.9185
+        ],
+        [
+          1018.4294,
+          955.8611
+        ],
+        [
+          1028.5442,
+          955.8611
+        ],
+        [
+          1028.5442,
+          981.1481
+        ],
+        [
+          1043.7164,
+          996.3203
+        ],
+        [
+          1048.7738,
+          996.3203
+        ],
+        [
+          1053.8312,
+          1001.3777
+        ],
+        [
+          1063.946,
+          1001.3777
+        ],
+        [
+          1069.0034,
+          1006.4351
+        ],
+        [
+          1074.0608,
+          1006.4351
+        ],
+        [
+          1079.1182,
+          1011.4925
+        ],
+        [
+          1084.1756,
+          1011.4925
+        ],
+        [
+          1094.2903,
+          1021.6073
+        ],
+        [
+          1104.4051,
+          1021.6073
+        ],
+        [
+          1114.5199,
+          1031.7221
+        ],
+        [
+          1119.5773,
+          1031.7221
+        ],
+        [
+          1124.6347,
+          1036.7794
+        ],
+        [
+          1139.8069,
+          1036.7794
+        ],
+        [
+          1144.8643,
+          1041.8368
+        ],
+        [
+          1149.9217,
+          1041.8368
+        ],
+        [
+          1154.9791,
+          1046.8942
+        ],
+        [
+          1160.0365,
+          1046.8942
+        ],
+        [
+          1220.7252,
+          1107.583
+        ],
+        [
+          1230.84,
+          1107.583
+        ],
+        [
+          1240.9548,
+          1117.6978
+        ],
+        [
+          1246.0122,
+          1117.6978
+        ]
+      ],
+      "lengthM": 500.2355,
+      "difficultyScore": 0.913,
+      "slopeScore": 0.2653,
+      "slopeDegrees": 3.9794,
+      "maxCellSlopeDeg": 14.606,
+      "p95CellMaxSlopeDeg": 13.695,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 85,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MAX_CSV"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P04_C5",
+      "from": "W10",
+      "to": "W11",
+      "geometry": [
+        [
+          1246.0122,
+          1117.6978
+        ],
+        [
+          1271.2992,
+          1117.6978
+        ],
+        [
+          1281.4139,
+          1127.8125
+        ],
+        [
+          1286.4713,
+          1127.8125
+        ],
+        [
+          1296.5861,
+          1137.9273
+        ],
+        [
+          1306.7009,
+          1137.9273
+        ],
+        [
+          1311.7583,
+          1142.9847
+        ],
+        [
+          1316.8157,
+          1142.9847
+        ],
+        [
+          1347.1601,
+          1173.3291
+        ],
+        [
+          1448.308,
+          1173.3291
+        ],
+        [
+          1458.4228,
+          1163.2143
+        ],
+        [
+          1503.9393,
+          1163.2143
+        ],
+        [
+          1508.9967,
+          1168.2717
+        ],
+        [
+          1534.2837,
+          1168.2717
+        ],
+        [
+          1630.3742,
+          1264.3622
+        ],
+        [
+          1630.3742,
+          1289.6492
+        ],
+        [
+          1645.5464,
+          1304.8214
+        ]
+      ],
+      "lengthM": 500.2355,
+      "difficultyScore": 0.9685,
+      "slopeScore": 0.3175,
+      "slopeDegrees": 4.7628,
+      "maxCellSlopeDeg": 14.711,
+      "p95CellMaxSlopeDeg": 14.527,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 85,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MAX_CSV"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P04_C6",
+      "from": "W11",
+      "to": "P04",
+      "geometry": [
+        [
+          1645.5464,
+          1304.8214
+        ],
+        [
+          1665.7759,
+          1325.0509
+        ],
+        [
+          1665.7759,
+          1345.2805
+        ],
+        [
+          1716.3499,
+          1395.8545
+        ],
+        [
+          1716.3499,
+          1411.0267
+        ],
+        [
+          1766.9238,
+          1461.6006
+        ],
+        [
+          1766.9238,
+          1471.7154
+        ],
+        [
+          1771.9812,
+          1476.7728
+        ],
+        [
+          1777.0386,
+          1476.7728
+        ],
+        [
+          1782.096,
+          1481.8302
+        ],
+        [
+          1787.1534,
+          1481.8302
+        ],
+        [
+          1792.2108,
+          1486.8876
+        ],
+        [
+          1802.3256,
+          1486.8876
+        ],
+        [
+          1807.383,
+          1491.945
+        ],
+        [
+          1832.67,
+          1491.945
+        ],
+        [
+          1837.7274,
+          1497.0024
+        ],
+        [
+          1863.0143,
+          1497.0024
+        ],
+        [
+          1878.1865,
+          1481.8302
+        ],
+        [
+          1908.5309,
+          1481.8302
+        ],
+        [
+          1913.5883,
+          1476.7728
+        ],
+        [
+          1928.7605,
+          1476.7728
+        ],
+        [
+          1933.8179,
+          1471.7154
+        ],
+        [
+          1938.8753,
+          1471.7154
+        ],
+        [
+          1943.9326,
+          1466.658
+        ],
+        [
+          1948.99,
+          1466.658
+        ],
+        [
+          1954.0474,
+          1461.6006
+        ],
+        [
+          1964.1622,
+          1461.6006
+        ],
+        [
+          1969.2196,
+          1456.5432
+        ],
+        [
+          1974.277,
+          1456.5432
+        ],
+        [
+          1979.3344,
+          1451.4858
+        ],
+        [
+          1984.3918,
+          1451.4858
+        ],
+        [
+          1989.4492,
+          1446.4284
+        ],
+        [
+          1994.5066,
+          1446.4284
+        ],
+        [
+          1999.564,
+          1441.371
+        ],
+        [
+          2009.6788,
+          1441.371
+        ],
+        [
+          2014.7362,
+          1436.3136
+        ],
+        [
+          2012.9952,
+          1435.7618
+        ]
+      ],
+      "lengthM": 502.4213,
+      "difficultyScore": 0.932,
+      "slopeScore": 0.2711,
+      "slopeDegrees": 4.0667,
+      "maxCellSlopeDeg": 14.87,
+      "p95CellMaxSlopeDeg": 13.98,
+      "blockedCellsUnderMax15Rule": 0,
+      "sampledCellCount": 83,
+      "enabled": true,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MAX_CSV"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MAX_15DEG_5PIX"
+    },
+    {
+      "id": "P04_MEAN_ALTERNATIVE",
+      "from": "S",
+      "to": "P04",
+      "geometry": [
+        [
+          697.9952,
+          1640.7618
+        ],
+        [
+          699.8136,
+          1638.6094
+        ],
+        [
+          972.9129,
+          1638.6094
+        ],
+        [
+          1003.2572,
+          1608.265
+        ],
+        [
+          1033.6016,
+          1608.265
+        ],
+        [
+          1043.7164,
+          1618.3798
+        ],
+        [
+          1119.5773,
+          1618.3798
+        ],
+        [
+          1129.6921,
+          1608.265
+        ],
+        [
+          1225.7826,
+          1608.265
+        ],
+        [
+          1230.84,
+          1603.2076
+        ],
+        [
+          1650.6038,
+          1603.2076
+        ],
+        [
+          1655.6612,
+          1598.1503
+        ],
+        [
+          1660.7185,
+          1598.1503
+        ],
+        [
+          1665.7759,
+          1593.0929
+        ],
+        [
+          1670.8333,
+          1593.0929
+        ],
+        [
+          1675.8907,
+          1588.0355
+        ],
+        [
+          1686.0055,
+          1588.0355
+        ],
+        [
+          1691.0629,
+          1582.9781
+        ],
+        [
+          1696.1203,
+          1582.9781
+        ],
+        [
+          1701.1777,
+          1577.9207
+        ],
+        [
+          1706.2351,
+          1577.9207
+        ],
+        [
+          1711.2925,
+          1572.8633
+        ],
+        [
+          1716.3499,
+          1572.8633
+        ],
+        [
+          1721.4073,
+          1567.8059
+        ],
+        [
+          1726.4647,
+          1567.8059
+        ],
+        [
+          1731.5221,
+          1562.7485
+        ],
+        [
+          1741.6369,
+          1562.7485
+        ],
+        [
+          1746.6943,
+          1557.6911
+        ],
+        [
+          1751.7517,
+          1557.6911
+        ],
+        [
+          1756.809,
+          1552.6337
+        ],
+        [
+          1761.8664,
+          1552.6337
+        ],
+        [
+          1766.9238,
+          1547.5763
+        ],
+        [
+          1771.9812,
+          1547.5763
+        ],
+        [
+          1777.0386,
+          1542.5189
+        ],
+        [
+          1782.096,
+          1542.5189
+        ],
+        [
+          1787.1534,
+          1537.4615
+        ],
+        [
+          1797.2682,
+          1537.4615
+        ],
+        [
+          1802.3256,
+          1532.4041
+        ],
+        [
+          1807.383,
+          1532.4041
+        ],
+        [
+          1812.4404,
+          1527.3467
+        ],
+        [
+          1817.4978,
+          1527.3467
+        ],
+        [
+          1822.5552,
+          1522.2893
+        ],
+        [
+          1827.6126,
+          1522.2893
+        ],
+        [
+          1832.67,
+          1517.2319
+        ],
+        [
+          1837.7274,
+          1517.2319
+        ],
+        [
+          1842.7848,
+          1512.1745
+        ],
+        [
+          1852.8995,
+          1512.1745
+        ],
+        [
+          1857.9569,
+          1507.1171
+        ],
+        [
+          1863.0143,
+          1507.1171
+        ],
+        [
+          1868.0717,
+          1502.0598
+        ],
+        [
+          1873.1291,
+          1502.0598
+        ],
+        [
+          1878.1865,
+          1497.0024
+        ],
+        [
+          1883.2439,
+          1497.0024
+        ],
+        [
+          1888.3013,
+          1491.945
+        ],
+        [
+          1893.3587,
+          1491.945
+        ],
+        [
+          1898.4161,
+          1486.8876
+        ],
+        [
+          1908.5309,
+          1486.8876
+        ],
+        [
+          1913.5883,
+          1481.8302
+        ],
+        [
+          1918.6457,
+          1481.8302
+        ],
+        [
+          1923.7031,
+          1476.7728
+        ],
+        [
+          1928.7605,
+          1476.7728
+        ],
+        [
+          1933.8179,
+          1471.7154
+        ],
+        [
+          1938.8753,
+          1471.7154
+        ],
+        [
+          1943.9326,
+          1466.658
+        ],
+        [
+          1948.99,
+          1466.658
+        ],
+        [
+          1954.0474,
+          1461.6006
+        ],
+        [
+          1964.1622,
+          1461.6006
+        ],
+        [
+          1969.2196,
+          1456.5432
+        ],
+        [
+          1974.277,
+          1456.5432
+        ],
+        [
+          1979.3344,
+          1451.4858
+        ],
+        [
+          1984.3918,
+          1451.4858
+        ],
+        [
+          1989.4492,
+          1446.4284
+        ],
+        [
+          1994.5066,
+          1446.4284
+        ],
+        [
+          1999.564,
+          1441.371
+        ],
+        [
+          2009.6788,
+          1441.371
+        ],
+        [
+          2014.7362,
+          1436.3136
+        ],
+        [
+          2012.9952,
+          1435.7618
+        ]
+      ],
+      "lengthM": 1411.7397,
+      "difficultyScore": 1,
+      "slopeScore": 0.3394,
+      "slopeDegrees": 5.0914,
+      "maxCellSlopeDeg": 28.027,
+      "p95CellMaxSlopeDeg": 20.842,
+      "blockedCellsUnderMax15Rule": 53,
+      "sampledCellCount": 261,
+      "enabled": false,
+      "sourceIds": [
+        "HIRISE_DTM",
+        "HIRISE_SLOPE",
+        "T028_REPORT",
+        "T028_P04_MEAN_CSV"
+      ],
+      "reviewStatus": "EXPERIMENTAL_NOT_APPROVED",
+      "corridorScenario": "MEAN_15DEG_5PIX",
+      "disabledReason": "Mean-cell slope may conceal steep source pixels; keep alternative out of active routing pending detailed GIS review."
+    }
+  ]
+}
