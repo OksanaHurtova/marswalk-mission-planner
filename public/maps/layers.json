@@ -32,6 +32,38 @@
         "product": "ESP_035191_1880_RED_A_01_ORTHO.JP2",
         "url": "https://www.uahirise.org/ESP_035191_1880"
       }
+    },
+    {
+      "id": "athabasca-slope",
+      "type": "image-static",
+      "title": "Athabasca Valles — slope visualization (degrees)",
+      "url": "maps/athabasca-slope.webp",
+      "extent": [
+        0,
+        0,
+        2500,
+        2500
+      ],
+      "imageSizePx": [
+        2048,
+        2048
+      ],
+      "visible": false,
+      "opacity": 0.7,
+      "attribution": "Derived from HiRISE stereo DTM / NASA / JPL / University of Arizona",
+      "source": {
+        "product": "candidate11_slope_deg.tif",
+        "derivedFrom": "DTEEC_035191_1880_036457_1880_A01.IMG",
+        "method": "GDAL slope degrees; nearest-neighbour visualization resampling to 2048 px",
+        "dataNote": "Colors visualize local slope. This resampled image must not be used for route safety or numerical slope checks."
+      },
+      "legendDegrees": [
+        "0–5",
+        "5–10",
+        "10–15",
+        ">15"
+      ],
+      "safetyDisclaimer": "15 degrees is an experimental visualization threshold, not a NASA EVA safety limit."
     }
   ]
 }
