@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import {
   compareRouteCostModels,
 } from '../lib/updatedDtmCost';
+import { publicScienceText } from '../../../ares-atlas/publicScienceText';
 
 type Props = { selectedTargetId: string };
 
@@ -64,7 +65,7 @@ export default function UpdatedDtmCostComparison({ selectedTargetId }: Props) {
           </strong>
           <ul>
             {comparison.errors.map((message) => (
-              <li key={message}>{message}</li>
+              <li key={message}>{publicScienceText(message)}</li>
             ))}
           </ul>
           <p>Missing or invalid measurements are never treated as zero slope.</p>
@@ -194,7 +195,7 @@ export default function UpdatedDtmCostComparison({ selectedTargetId }: Props) {
           margin: '14px 0 0',
         }}
       >
-        <strong>Methodology:</strong> {comparison.modelDescription} The
+        <strong>Methodology:</strong> {publicScienceText(comparison.modelDescription)} The
         experimental 15° reference is not a NASA EVA safety standard.
         Centerline measurement coverage refers to sampled positions along the
         route, not the full corridor width. In the updated scenario, a zero

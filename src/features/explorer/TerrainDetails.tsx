@@ -40,7 +40,7 @@ export default function TerrainDetails({ edgeIds, title = 'Terrain measurements'
             {edgeIds.map((edgeId, index) => {
               const segment = lookupTerrainSegment(edgeId);
               if (!segment) {
-                return <p role="status" key={`${edgeId}-${index}`} style={{ color: '#f8d78d' }}>{edgeId}: No T-016 data for this segment.</p>;
+                return <p role="status" key={`${edgeId}-${index}`} style={{ color: '#f8d78d' }}>{edgeId}: No centerline measurements available for this segment.</p>;
               }
               return (
                 <details key={`${edgeId}-${index}`} open={index === 0} style={{ background: '#1b293a', padding: '10px 12px', border: '1px solid #344459', borderRadius: 9 }}>
