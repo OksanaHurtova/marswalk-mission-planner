@@ -15,6 +15,7 @@ import startPointData from '../data/startPoint_preliminary.json';
 import network from '../data/network.json';
 import { recommendRoute } from '../lib/recommendRoute';
 import { explainCorridorDifficulty } from '../lib/corridorDifficultyReview';
+import { publicScienceText } from '../../../ares-atlas/publicScienceText';
 
 type XY = [number, number];
 
@@ -100,13 +101,34 @@ export default function MissionMapConnector({
   }
 
   return (
-    <div style={{ width: '100%', display: 'grid', gap: 24 }}>
-      <section aria-label="Interactive Mars mission map">
-        <h2>Mission Area — Candidate 11</h2>
-        <p style={{ lineHeight: 1.6 }}>
-          Select a science target or the mission start on the map or in the
-          legend. Science destinations calculate experimental routes from S.
-        </p>
+    <div className="aa-mission">
+      <section id="atlas-map" className="aa-map-section" aria-label="Interactive Mars mission map">
+        <div className="aa-section-heading">
+          <div>
+            <p className="aa-panel-eyebrow">01 / FIELD EXPLORER</p>
+            <h2>Mission map</h2>
+          </div>
+          <p>Select a scientific destination to display its experimental route. Select S to inspect the preliminary staging location.</p>
+        </div>
+
+        <div className="aa-target-ribbon" role="group" aria-label="Select mission location">
+          {mapPoints.map((point) => {
+            const active = point.id === activePointId;
+            return (
+              <button
+                key={point.id}
+                type="button"
+                aria-pressed={active}
+                title={`${point.name} — ${locationHints[point.id] ?? 'Mission location'}`}
+                onClick={() => handleMapSelection(point.id)}
+              >
+                <span className="aa-target-dot" aria-hidden="true" />
+                <span>{point.id}</span>
+                {active && <span className="aa-target-active">SELECTED</span>}
+              </button>
+            );
+          })}
+        </div>
 
         <MapComponent
           points={mapPoints}
@@ -115,128 +137,32 @@ export default function MissionMapConnector({
           routeGeometry={routeGeometry}
         />
 
-        <div
-          aria-label="Mission map legend"
-          style={{
-            marginTop: 16,
-            padding: 18,
-            border: '1px solid #536478',
-            borderRadius: 12,
-            background: '#172331',
-          }}
-        >
-          <h3 style={{ margin: '0 0 8px', fontSize: 20 }}>
-            Map Legend — Mission Locations
-          </h3>
-          <p style={{ margin: '0 0 16px', color: '#bdcbdb', lineHeight: 1.6 }}>
-            Select S to inspect the staging area, or P01–P04 to display the
-            corresponding science target and experimental route.
-          </p>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-              gap: 12,
-            }}
-          >
-            {mapPoints.map((point) => {
-              const isSelected = point.id === activePointId;
-              return (
-                <button
-                  key={point.id}
-                  type="button"
-                  aria-pressed={isSelected}
-                  onClick={() => handleMapSelection(point.id)}
-                  style={{
-                    appearance: 'none',
-                    cursor: 'pointer',
-                    display: 'block',
-                    width: '100%',
-                    padding: 14,
-                    textAlign: 'left',
-                    border: isSelected
-                      ? '2px solid #36ddff'
-                      : '1px solid #536478',
-                    borderRadius: 10,
-                    color: '#eef4fc',
-                    background: isSelected ? '#1e3c55' : '#263342',
-                    boxShadow: isSelected ? '0 0 0 1px #36ddff' : 'none',
-                    fontFamily: 'inherit',
-                  }}
-                >
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 10,
-                      marginBottom: 10,
-                    }}
-                  >
-                    <span
-                      aria-hidden="true"
-                      style={{
-                        width: 12,
-                        height: 12,
-                        borderRadius: '50%',
-                        background: point.id === 'S' ? '#37e7c0' : '#ffbd55',
-                        border: '2px solid #ffffff',
-                      }}
-                    />
-                    <strong style={{ fontSize: 19 }}>{point.id}</strong>
-                    {isSelected && (
-                      <span style={{ color: '#95dfff', fontSize: 10 }}>
-                        SELECTED
-                      </span>
-                    )}
-                  </div>
-                  <div style={{ fontSize: 14, fontWeight: 600, lineHeight: 1.5 }}>
-                    {point.name}
-                  </div>
-                  <div style={{ marginTop: 8, fontSize: 12, color: '#b6c8dc' }}>
-                    {locationHints[point.id] ?? 'Mission location'}
-                  </div>
-                  <div style={{ marginTop: 8, fontSize: 12, color: '#91d4ff' }}>
-                    {point.id === 'S'
-                      ? 'Inspect mission start'
-                      : 'View science and route'}
-                  </div>
-                </button>
-              );
-            })}
+        {isStartSelected && (
+          <div className="aa-staging-note" role="status">
+            <strong>S — {startMapPoint.name}</strong>
+            <p>Preliminary local position: X {startMapPoint.localXY_m[0].toFixed(2)} m · Y {startMapPoint.localXY_m[1].toFixed(2)} m.</p>
+            <p>This staging position is not an approved EVA departure or safety location. Select P01–P04 to display an experimental route from S.</p>
           </div>
+        )}
 
-          {isStartSelected && (
-            <div
-              role="status"
-              style={{
-                marginTop: 14,
-                padding: 14,
-                borderRadius: 10,
-                background: '#233a43',
-                border: '1px solid #37e7c0',
-                lineHeight: 1.7,
-              }}
-            >
-              <strong>S — {startMapPoint.name}</strong>
-              <p style={{ margin: '8px 0' }}>
-                Preliminary start point at local coordinates X ={' '}
-                {startMapPoint.localXY_m[0].toFixed(2)} m, Y ={' '}
-                {startMapPoint.localXY_m[1].toFixed(2)} m.
-              </p>
-              <p style={{ margin: 0 }}>
-                This is a candidate staging position, not an approved astronaut
-                landing, departure or EVA safety location. Select P01–P04 to
-                display an experimental route from S.
-              </p>
-            </div>
-          )}
-
-          <p style={{ margin: '14px 0 0', fontSize: 12, color: '#9daec1' }}>
-            The labels and positions are preliminary. Dashed cyan lines show
-            experimental paths, not approved EVA routes.
-          </p>
-        </div>
+        <details className="aa-location-register">
+          <summary>Location register & preliminary positions</summary>
+          <div className="aa-location-register-grid">
+            {mapPoints.map((point) => (
+              <button
+                key={point.id}
+                type="button"
+                aria-pressed={point.id === activePointId}
+                onClick={() => handleMapSelection(point.id)}
+              >
+                <strong>{point.id} / {point.name}</strong>
+                <small>{locationHints[point.id] ?? 'Mission location'}</small>
+                <small>Local X {point.localXY_m[0].toFixed(2)} m / Y {point.localXY_m[1].toFixed(2)} m</small>
+              </button>
+            ))}
+          </div>
+        </details>
+        <p className="aa-map-disclaimer">Locations are preliminary. Route lines depict experimental research paths, not approved astronaut EVA corridors.</p>
       </section>
 
       <MissionTargets selectedId={selectedId} onSelect={selectScienceTarget} />
@@ -253,7 +179,7 @@ export default function MissionMapConnector({
         <h2 id="experimental-route-heading">Experimental Mars Route Planner</h2>
         <p><strong>Start:</strong> S — Channel Floor Staging Site</p>
         <p><strong>Destination:</strong> {selectedId}</p>
-        <p><strong>Study Area:</strong> Athabasca Valles — Candidate 11</p>
+        <p><strong>Study Area:</strong> Athabasca Valles</p>
         <p><strong>Routing Method:</strong> Balanced Cost + Dijkstra</p>
 
         {isStartSelected ? (
@@ -268,7 +194,7 @@ export default function MissionMapConnector({
                 <h3>Route Planning Errors</h3>
                 <ul>
                   {recommendation.errors.map((error, index) => (
-                    <li key={index}>{error}</li>
+                    <li key={index}>{publicScienceText(error)}</li>
                   ))}
                 </ul>
               </section>
@@ -309,7 +235,7 @@ export default function MissionMapConnector({
                 <h3>Data Limitations</h3>
                 <ul>
                   {recommendation.warnings.map((warning, index) => (
-                    <li key={index}>{warning}</li>
+                    <li key={index}>{publicScienceText(warning)}</li>
                   ))}
                 </ul>
               </section>

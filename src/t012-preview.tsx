@@ -15,7 +15,7 @@ function RoutePreview() {
 
   return (
     <main style={{ maxWidth: 1100, padding: 24, margin: '0 auto' }}>
-      <h1>Marswalk — T-012 RouteOverlay</h1>
+      <h1>Marswalk — Experimental Route Preview</h1>
       <p>Athabasca Valles · candidate 11 · experimental corridors from Ania's network.json</p>
       <p style={{ color: '#ffbd55' }}>
         Research prototype: these corridors are NOT approved astronaut EVA routes.
