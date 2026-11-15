@@ -11,6 +11,7 @@ import VectorLayer from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
 import { Circle as CircleStyle, Fill, Stroke, Style, Text } from 'ol/style.js';
 import LayerControls, { type LayerVisibility, type MapLayerId } from './LayerControls';
+import RouteOverlay, { type RouteGeometry } from './RouteOverlay';
 import 'ol/ol.css';
 
 type Extent = [number, number, number, number];
@@ -48,11 +49,13 @@ const EMPTY_POINTS: ScientificPoint[] = [];
 type MarsMapProps = {
   points?: ScientificPoint[];
   onSelectTarget?: (pointId: string) => void;
+  routeGeometry?: RouteGeometry | null;
 };
 
-export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget }: MarsMapProps) {
+export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget, routeGeometry = null }: MarsMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string | null>(null);
+  const [openLayersMap, setOpenLayersMap] = useState<Map | null>(null);
   const poiSource = useMemo(() => new VectorSource<Feature<Point>>(), []);
 
   // T-011: стан перемикачів. OpenLayers-шари не створюються заново при toggle.
@@ -240,6 +243,7 @@ export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget }: MarsM
         element.style.cursor = onPoi ? 'pointer' : '';
       });
 
+      setOpenLayersMap(map ?? null);
       map.updateSize();
       view.fit(extent, {
         size: map.getSize(),
@@ -277,6 +281,7 @@ export default function MarsMap({ points = EMPTY_POINTS, onSelectTarget }: MarsM
         ref={containerRef}
         style={{ width: '100%', height: '100%' }}
       />
+      <RouteOverlay map={openLayersMap} geometry={routeGeometry} />
       {error && (
         <p style={{ color: '#ff7777', padding: '12px' }}>
           Помилка карти: {error}
