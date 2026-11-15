@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Map from 'ol/Map.js';
+import ScaleLine from 'ol/control/ScaleLine.js';
 import View from 'ol/View.js';
 import ImageLayer from 'ol/layer/Image.js';
 import ImageStatic from 'ol/source/ImageStatic.js';
@@ -14,7 +15,9 @@ import { Circle as CircleStyle, Fill, Stroke, Style, Text } from 'ol/style.js';
 import LayerControls, { type LayerVisibility, type MapLayerId } from './LayerControls';
 import { DEFAULT_SLOPE_TRANSPARENCY_PERCENT, normalizeTransparencyPercent, transparencyPercentToOpacity } from './slopeTransparency';
 import RouteOverlay, { type RouteGeometry } from './RouteOverlay';
+import MapLegend from './MapLegend';
 import 'ol/ol.css';
+import './MarsMapLayout.css';
 
 type Extent = [number, number, number, number];
 
@@ -133,7 +136,7 @@ export default function MarsMap({
       ]);
 
       if (!regionResponse.ok || !layersResponse.ok) {
-        throw new Error('Не вдалося завантажити конфігурацію карти.');
+        throw new Error('Unable to load the map configuration.');
       }
 
       const region = (await regionResponse.json()) as RegionConfig;
@@ -143,19 +146,19 @@ export default function MarsMap({
       );
 
       if (!layer) {
-        throw new Error('У layers.json немає шару athabasca-base.');
+        throw new Error('Missing athabasca-base in layers.json.');
       }
 
       if (
         config.regionId !== region.id ||
         JSON.stringify(layer.extent) !== JSON.stringify(region.extent)
       ) {
-        throw new Error('Межі карти не збігаються з region.json.');
+        throw new Error('Map extents do not match region.json.');
       }
 
       const slopeConfig = config.layers.find((item) => item.id === 'athabasca-slope');
       if (!slopeConfig || JSON.stringify(slopeConfig.extent) !== JSON.stringify(region.extent)) {
-        throw new Error('У layers.json відсутній коректний шар athabasca-slope.');
+        throw new Error('Missing or invalid athabasca-slope in layers.json.');
       }
 
       if (controller.signal.aborted || !containerRef.current) {
@@ -278,6 +281,9 @@ export default function MarsMap({
         element.style.cursor = onPoi ? 'pointer' : '';
       });
 
+      // T-022: OpenLayers metric scale uses local Mars map metres, not Earth EPSG:4326.
+      map.addControl(new ScaleLine({ units: 'metric', minWidth: 96 }));
+
       setOpenLayersMap(map ?? null);
       map.updateSize();
       view.fit(extent, {
@@ -319,33 +325,25 @@ export default function MarsMap({
   }, [openLayersMap, routeGeometry, selectedTargetId]);
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: '70vh',
-        minHeight: '420px',
-        background: '#171b20',
-      }}
-    >
-      <div style={{ position: 'absolute', zIndex: 20, top: 12, right: 12 }}>
+    <div className="marswalk-map-layout">
+      <div className="marswalk-map-canvas">
+        <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
+        <RouteOverlay map={openLayersMap} geometry={routeGeometry} />
+        {error && (
+          <p role="alert" style={{ position: 'absolute', left: 14, bottom: 42, color: '#fecaca', background: '#451c23', padding: 10, borderRadius: 8 }}>
+            Map error: {error}
+          </p>
+        )}
+      </div>
+      <aside className="marswalk-map-sidebar" aria-label="Map controls and legend">
         <LayerControls
           visible={visibleLayers}
           onToggle={handleLayerToggle}
           slopeTransparencyPercent={slopeTransparencyPercent}
           onSlopeTransparencyChange={handleSlopeTransparencyChange}
         />
-      </div>
-      <div
-        ref={containerRef}
-        style={{ width: '100%', height: '100%' }}
-      />
-      <RouteOverlay map={openLayersMap} geometry={routeGeometry} />
-      {error && (
-        <p style={{ color: '#ff7777', padding: '12px' }}>
-          Помилка карти: {error}
-        </p>
-      )}
+        <MapLegend hasRoute={Boolean(routeGeometry && routeGeometry.length >= 2)} selectedTargetId={selectedTargetId} />
+      </aside>
     </div>
   );
 }

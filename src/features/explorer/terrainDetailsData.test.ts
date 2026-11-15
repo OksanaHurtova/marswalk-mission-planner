@@ -3,14 +3,14 @@ import { coverageLabel, lookupTerrainSegment, measured, previewEdgeIdsForTarget 
 
 describe('T-020 real terrain details', () => {
   it('does not convert missing slope to zero', () => {
-    expect(measured(null)).toBe('Немає даних');
-    expect(measured(undefined)).toBe('Немає даних');
-    expect(measured(Number.NaN)).toBe('Немає даних');
-    expect(measured(0)).not.toBe('Немає даних');
+    expect(measured(null)).toBe('No data');
+    expect(measured(undefined)).toBe('No data');
+    expect(measured(Number.NaN)).toBe('No data');
+    expect(measured(0)).not.toBe('No data');
   });
   it('does not invent missing coverage', () => {
-    expect(coverageLabel(null)).toBe('Немає даних');
-    expect(coverageLabel(1.2)).toBe('Немає даних');
+    expect(coverageLabel(null)).toBe('No data');
+    expect(coverageLabel(1.2)).toBe('No data');
     expect(coverageLabel(1)).toContain('100');
   });
   it('reads real T-016 segment P01_C1 with provenance', () => {

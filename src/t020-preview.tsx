@@ -5,6 +5,7 @@ import TerrainDetails from './features/explorer/TerrainDetails';
 import { previewEdgeIdsForTarget } from './features/explorer/terrainDetailsData';
 import { demoPoints } from './features/explorer/demoPoints';
 import { experimentalRoutesFromAnia } from './features/explorer/experimentalRoutesFromAnia';
+import './MarswalkPreview.css';
 
 type Target = keyof typeof experimentalRoutesFromAnia;
 const targetIds: Target[] = ['P01', 'P02', 'P03', 'P04'];
@@ -13,27 +14,36 @@ function T020Preview() {
   const [selected, setSelected] = useState<Target>('P04');
   const edgeIds = previewEdgeIdsForTarget(selected);
   return (
-    <main style={{ maxWidth: 1100, padding: 24, margin: '0 auto', fontFamily: 'system-ui, sans-serif', color: '#f8fafc' }}>
-      <h1>Marswalk · T-020 Terrain Details</h1>
-      <p>Athabasca Valles · реальні вимірювання T-016 для сегментів тестового маршруту</p>
-      <p style={{ color: '#fcd34d' }}>Експериментальний прототип — маршрути не схвалені NASA для EVA.</p>
-      <nav aria-label="Оберіть маршрут" style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 14 }}>
+    <main className="marswalk-page">
+      <header className="marswalk-header">
+        <div>
+          <div className="marswalk-kicker">Marswalk / Mission Planner</div>
+          <h1>Explore Athabasca Valles</h1>
+          <p className="marswalk-subtitle">HiRISE terrain imagery · Science destinations · Measured route segments</p>
+        </div>
+        <span className="marswalk-status">Research prototype · Not EVA certified</span>
+      </header>
+      <nav aria-label="Choose destination" className="marswalk-toolbar">
+        <span className="marswalk-toolbar-label">DESTINATION</span>
         {targetIds.map((target) => (
-          <button key={target} type="button" onClick={() => setSelected(target)}
-            style={{ border: 0, borderRadius: 6, padding: '9px 14px', cursor: 'pointer', background: selected === target ? '#00dcff' : '#334155', color: selected === target ? '#10202b' : '#fff' }}>
+          <button key={target} type="button" className="marswalk-route-button" aria-pressed={selected === target} onClick={() => setSelected(target)}>
             S → {target}
           </button>
         ))}
       </nav>
       <MarsMap points={demoPoints} selectedTargetId={selected} routeGeometry={experimentalRoutesFromAnia[selected]}
         onSelectTarget={(id) => { if (targetIds.includes(id as Target)) setSelected(id as Target); }} />
-      <div style={{ marginTop: 18 }}>
-        <TerrainDetails edgeIds={edgeIds} title={`Рельєф · маршрут S → ${selected}`} />
+      <div className="marswalk-metrics">
+        <TerrainDetails edgeIds={edgeIds} title={`Terrain details · S → ${selected}`} />
       </div>
-      <p style={{ color: '#94a3b8', fontSize: 12 }}>
-        T-020 preview: список сегментів відновлено лише зі збереженого однозначного дерева T-016 для демонстрації.
-        У спільному застосунку потрібно передавати <code>RouteResult.edgeIds</code> безпосередньо від планувальника Ані.
-      </p>
+      <details className="marswalk-preview-notes">
+        <summary>About this route preview and data limitations</summary>
+        <p>
+          The route in this preview follows the uniquely connected experimental T-016 segment tree.
+          In the integrated application, TerrainDetails must receive the exact RouteResult.edgeIds from the planner.
+          These are measured research corridors, not NASA-approved astronaut EVA routes.
+        </p>
+      </details>
     </main>
   );
 }

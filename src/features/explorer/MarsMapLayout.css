@@ -1,0 +1,47 @@
+/* UI-only layout: keep OpenLayers geometry and map controls untouched. */
+.marswalk-map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 276px;
+  gap: 14px;
+  align-items: stretch;
+  width: 100%;
+}
+.marswalk-map-canvas {
+  position: relative;
+  min-width: 0;
+  min-height: 470px;
+  height: clamp(470px, 67vh, 740px);
+  background: #161c26;
+  border: 1px solid #344255;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.marswalk-map-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  min-height: 0;
+  max-height: clamp(470px, 67vh, 740px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #475569 transparent;
+}
+.marswalk-map-canvas .ol-scale-line {
+  left: 12px;
+  bottom: 12px;
+  background: rgba(8, 16, 29, 0.76);
+  border-radius: 6px;
+  padding: 4px 6px;
+}
+.marswalk-map-canvas .ol-scale-line-inner { color: #ffffff; border-color: #ffffff; }
+@media (max-width: 860px) {
+  .marswalk-map-layout { grid-template-columns: minmax(0, 1fr); }
+  .marswalk-map-canvas { min-height: 400px; height: min(62vh, 610px); }
+  .marswalk-map-sidebar {
+    max-height: none;
+    overflow: visible;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+  }
+}

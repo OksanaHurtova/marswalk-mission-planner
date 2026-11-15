@@ -25,14 +25,14 @@ const SEGMENTS_BY_ID = new Map(SEGMENTS.map((segment) => [segment.id, segment]))
 /** Missing and nonfinite values are missing, never 0. */
 export function measured(value: number | null | undefined, fractionDigits = 2): string {
   return typeof value === 'number' && Number.isFinite(value)
-    ? value.toLocaleString('uk-UA', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits })
-    : 'Немає даних';
+    ? value.toLocaleString('en-US', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits })
+    : 'No data';
 }
 
 export function coverageLabel(value: number | null | undefined): string {
   return typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= 1
     ? `${measured(value * 100, 1)}%`
-    : 'Немає даних';
+    : 'No data';
 }
 
 export function lookupTerrainSegment(edgeId: string): TerrainSegment | null {

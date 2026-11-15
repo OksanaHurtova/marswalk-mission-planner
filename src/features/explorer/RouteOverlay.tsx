@@ -39,7 +39,7 @@ const startStyles = [
       stroke: new Stroke({ color: '#0b2431', width: 3 }),
     }),
     text: new Text({
-      text: 'СТАРТ · S',
+      text: 'START · S',
       offsetY: -35,
       font: 'bold 16px sans-serif',
       fill: new Fill({ color: '#ffffff' }),
