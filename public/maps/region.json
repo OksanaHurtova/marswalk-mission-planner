@@ -1,0 +1,45 @@
+{
+  "id": "athabasca_candidate_11",
+  "name": "Athabasca Valles — candidate 11",
+  "sourceProjection": "Equirectangular MARS",
+  "sourceProjectionWkt": "PROJCS[\"Equirectangular MARS\",GEOGCS[\"GCS_MARS\",DATUM[\"D_MARS\",SPHEROID[\"MARS_localRadius\",3396036.8126024,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",5],PARAMETER[\"central_meridian\",155.67],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+  "units": "m",
+  "originProjectedXY": [
+    -847.9952,
+    475629.2382
+  ],
+  "sourceProjectedExtent": [
+    -847.9952,
+    475629.2382,
+    1652.0048,
+    478129.2382
+  ],
+  "extent": [
+    0,
+    0,
+    2500,
+    2500
+  ],
+  "widthM": 2500,
+  "heightM": 2500,
+  "axes": {
+    "x": "east",
+    "y": "north"
+  },
+  "coordinateConversion": {
+    "localX": "projectedX - originProjectedXY[0]",
+    "localY": "projectedY - originProjectedXY[1]"
+  },
+  "webMapImageExtent": [
+    0,
+    0,
+    2500,
+    2500
+  ],
+  "boundarySource": "candidate_11.gpkg",
+  "notes": [
+    "Original CRS is a Mars-specific custom projected CRS; do not replace with EPSG:4326.",
+    "POI coordinates remain preliminary pending route-corridor validation.",
+    "Raster-derived slopes are sampled at POI pixels and do not establish corridor passability."
+  ]
+}
