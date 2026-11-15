@@ -1,181 +1,64 @@
-import MarsMap from "./features/explorer/MarsMap";
-import MissionMapConnector from "./features/planner/components/MissionMapConnector";
+import MissionMapConnector from './features/planner/components/MissionMapConnector';
+import AtlasMapView from './ares-atlas/AtlasMapView';
+import './ares-atlas/Atlas.css';
 
-const globalStyles = `
-  :root {
-    font-family: Inter, system-ui, Arial, sans-serif;
-    color: #e8eef6;
-    background: #0c1420;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-  }
-
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
-  html,
-  body,
-  #root {
-    width: 100%;
-    max-width: none;
-    min-height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
-    display: block;
-    min-width: 320px;
-    min-height: 100vh;
-    background: #0c1420;
-  }
-
-  #root {
-    text-align: left;
-  }
-
-  a {
-    color: #8bd1ff;
-  }
-
-  a:hover {
-    color: #c7eaff;
-  }
-`;
-
+/** Presentation-only entry point. All research data and routing remain in planner. */
 function App() {
   return (
-    <>
-      <style>{globalStyles}</style>
-
-      <div
-        style={{
-          width: "100%",
-          minHeight: "100vh",
-          background: "#0c1420",
-          color: "#e8eef6",
-        }}
-      >
-        <header
-          style={{
-            padding: "30px 20px",
-            borderBottom: "1px solid #344254",
-            background: "#131e2c",
-          }}
-        >
-          <div
-            style={{
-              maxWidth: 1320,
-              margin: "0 auto",
-            }}
-          >
-            <p
-              style={{
-                margin: "0 0 10px",
-                fontSize: 13,
-                fontWeight: 700,
-                letterSpacing: 2,
-                color: "#80c9ff",
-              }}
-            >
-              NASA SPACE APPS CHALLENGE
-            </p>
-
-            <h1
-              style={{
-                margin: "0 0 12px",
-                fontSize: "clamp(28px, 4vw, 44px)",
-                lineHeight: 1.15,
-              }}
-            >
-              Marswalk Mission Planner
-            </h1>
-
-            <p
-              style={{
-                margin: "0 0 8px",
-                lineHeight: 1.7,
-                maxWidth: 850,
-                color: "#b8c9db",
-              }}
-            >
-              Explore real Martian terrain, investigate
-              science targets, and plan experimental
-              routes using NASA HiRISE elevation data.
-            </p>
-
-            <p
-              style={{
-                margin: 0,
-                fontSize: 13,
-                color: "#91a8bf",
-              }}
-            >
-              Athabasca Valles — Candidate 11
-              {" | "}
-              2.5 × 2.5 km
-              {" | "}
-              Equirectangular MARS
-            </p>
-          </div>
-        </header>
-
-        <main
-          style={{
-            maxWidth: 1320,
-            margin: "0 auto",
-            padding: "30px 20px 50px",
-          }}
-        >
-          <MissionMapConnector
-            MapComponent={MarsMap}
-          />
-        </main>
-
-        <footer
-          style={{
-            borderTop: "1px solid #344254",
-            background: "#131e2c",
-            padding: "24px 20px",
-          }}
-        >
-          <div
-            style={{
-              maxWidth: 1320,
-              margin: "0 auto",
-            }}
-          >
-            <p
-              style={{
-                margin: "0 0 8px",
-                fontSize: 13,
-                color: "#d1deec",
-              }}
-            >
-              Marswalk Mission Planner — Research Prototype
-            </p>
-
-            <p
-              style={{
-                margin: 0,
-                fontSize: 12,
-                color: "#91a8bf",
-                lineHeight: 1.6,
-              }}
-            >
-              Terrain imagery and elevation data:
-              NASA HiRISE / JPL / University of Arizona.
-              All science locations and route corridors
-              are preliminary. Experimental routing is
-              not an approved EVA safety assessment.
-            </p>
-          </div>
-        </footer>
+    <div className="aa-app" id="top">
+      <div className="aa-masthead">
+        <div className="aa-shell aa-masthead-row">
+          <span>MARSWALK / FIELD ATLAS</span>
+          <span>NASA HI<span aria-hidden="true">·</span>RISE TERRAIN RESEARCH</span>
+        </div>
       </div>
-    </>
+
+      <header className="aa-header aa-shell">
+        <a className="aa-brand" href="#top" aria-label="Ares Atlas — back to top">
+          <span className="aa-brand-symbol" aria-hidden="true">✳</span>
+          <span className="aa-brand-text">
+            <strong>Ares Atlas</strong>
+            <small>MARSWALK / MISSION PLANNER</small>
+          </span>
+        </a>
+        <nav className="aa-nav" aria-label="Atlas sections">
+          <a href="#atlas-map"><span>01</span> Explore</a>
+          <a href="#mission-targets-heading"><span>02</span> Targets</a>
+          <a href="#experimental-route-heading"><span>03</span> Analyze</a>
+          <a href="#atlas-sources"><span>04</span> Sources</a>
+        </nav>
+        <span className="aa-prototype">RESEARCH PROTOTYPE</span>
+      </header>
+
+      <main className="aa-main aa-shell">
+        <section className="aa-intro" aria-label="Mission introduction">
+          <div className="aa-intro-title">
+            <p className="aa-eyebrow">MARS / ATHABASCA VALLES</p>
+            <h1>Read the terrain.<br /><em>Plan the traverse.</em></h1>
+          </div>
+          <div className="aa-intro-description">
+            <p className="aa-panel-eyebrow">THE EXPEDITION</p>
+            <p>Plan experimental traverses across real Martian terrain. Explore four preliminary science destinations and compare terrain evidence from NASA orbital data.</p>
+          </div>
+          <div className="aa-intro-index">
+            <p className="aa-panel-eyebrow">FIELD RECORD</p>
+            <div><span>STUDY AREA</span><strong>Athabasca Valles</strong></div>
+            <div><span>MAP EXTENT</span><strong>2.5 × 2.5 km</strong></div>
+            <div><span>REFERENCE</span><strong>HiRISE / MRO</strong></div>
+          </div>
+        </section>
+
+        <MissionMapConnector MapComponent={AtlasMapView} />
+      </main>
+
+      <footer className="aa-footer">
+        <div className="aa-shell aa-footer-grid">
+          <div><strong>ARES ATLAS</strong><span> / MARSWALK MISSION PLANNER</span></div>
+          <p>NASA HiRISE / JPL / University of Arizona. Regional context: Mars Odyssey / THEMIS via USGS.</p>
+          <small>EXPERIMENTAL RESEARCH ONLY — NOT AN APPROVED EVA SAFETY ASSESSMENT</small>
+        </div>
+      </footer>
+    </div>
   );
 }
 

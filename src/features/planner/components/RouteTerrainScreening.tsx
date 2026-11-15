@@ -82,7 +82,7 @@ export default function RouteTerrainScreening({ route }: Props) {
       </h3>
       <p style={{ margin: '0 0 18px', color: '#ccdfed', lineHeight: 1.65, fontSize: 14 }}>
         Compare two different measurements of the selected experimental corridor: the
-        1 m-step centerline samples and the 10 m-wide surrounding-terrain strip
+        1 m-step centerline samples and the 10 m-wide nearby terrain strip
         (5 m on each side). The original Dijkstra graph costs are unchanged.
       </p>
 
@@ -97,12 +97,12 @@ export default function RouteTerrainScreening({ route }: Props) {
         <Metric
           title="Highest slope on centerline"
           value={formatDegrees(comparison.maxCenterlineSlopeDeg)}
-          description="Original slope pixels sampled along the route"
+          description="Original HiRISE slope pixels sampled along the route centerline"
         />
         <Metric
           title="Highest slope within ±5 m"
           value={formatDegrees(comparison.maxNearbySlopeDeg)}
-          description="Slope pixels in a strip surrounding the route"
+          description="Slope pixels within a ±5 m strip surrounding the route"
         />
         <Metric
           title="Centerline coverage"
@@ -194,7 +194,7 @@ export default function RouteTerrainScreening({ route }: Props) {
                 {' '}{centerline?.uniqueValidCells ?? 'unknown'} unique valid source pixels.
               </p>
               <p style={{ margin: '5px 0' }}>
-                <strong>Nearby terrain:</strong> strip maximum
+                <strong>Nearby terrain screening:</strong> strip maximum
                 {' '}{formatDegrees(buffer.bufferMaxSlopeDeg)},
                 {' '}{buffer.bufferPixelsAbove15DegPercent.toFixed(2)}% of buffer slope pixels above
                 {' '}15°. This percentage is not a percentage of the route length.
@@ -226,9 +226,9 @@ export default function RouteTerrainScreening({ route }: Props) {
           color: '#e0eaf5',
         }}
       >
-        <strong>Scientific limits.</strong> Centerline analysis uses {comparison.sampleSpacingM} m positions
+        <strong>Scientific limits.</strong> Centerline sampling uses {comparison.sampleSpacingM} m positions
         {' '}along the original polyline and computes statistics over unique valid ~1.01 m
-        {' '}raster pixels. Nearby-terrain screening examines pixels in a ±5 m strip. A 100% centerline
+        {' '}raster pixels. Nearby terrain screening examines pixels in a ±5 m strip. A 100% centerline
         {' '}coverage figure means that all planned centerline sample positions had valid
         {' '}DTM and slope values; it does not mean 100% coverage of the corridor width.
         {' '}The project’s 15° comparison is not an official NASA EVA threshold.

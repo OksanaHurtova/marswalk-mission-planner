@@ -90,7 +90,7 @@ export default function MissionTargets({
             color: "#e0e7ef",
           }}
         >
-          4 science targets · 2.5 × 2.5 km
+          4 science stops
         </span>
       </div>
 
@@ -219,13 +219,13 @@ export default function MissionTargets({
               fontSize: 13,
             }}
           >
-            Preliminary site coordinates
+            Preliminary QGIS location
           </span>
         </div>
 
         {preliminaryPoint ? (
           <section
-            aria-label="Preliminary site coordinates"
+            aria-label="Preliminary QGIS coordinates"
             style={{
               padding: 16,
               marginTop: 20,
@@ -241,7 +241,7 @@ export default function MissionTargets({
                 marginBottom: 12,
               }}
             >
-              Preliminary Site Coordinates
+              Preliminary QGIS Location
             </h4>
 
             <p
@@ -511,9 +511,9 @@ export default function MissionTargets({
           stations, and route accessibility
           require GIS validation.
 
-          The mock route planner below is
-          not geographically linked to these
-          science stops.
+          The routes shown in the integrated planner are connected to
+          the preliminary science destinations. Accessibility and
+          terrain safety remain unapproved and require further GIS review.
         </p>
 
         <a

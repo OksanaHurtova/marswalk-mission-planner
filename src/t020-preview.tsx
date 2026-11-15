@@ -39,7 +39,7 @@ function T020Preview() {
       <details className="marswalk-preview-notes">
         <summary>About this route preview and data limitations</summary>
         <p>
-          The route in this preview follows the uniquely connected experimental T-016 segment tree.
+          The route in this preview follows the uniquely connected experimental corridor graph.
           In the integrated application, TerrainDetails must receive the exact RouteResult.edgeIds from the planner.
           These are measured research corridors, not NASA-approved astronaut EVA routes.
         </p>

@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import {
   compareRouteCostModels,
 } from '../lib/updatedDtmCost';
+import { publicScienceText } from '../../../ares-atlas/publicScienceText';
 
 type Props = { selectedTargetId: string };
 
@@ -40,7 +41,7 @@ export default function UpdatedDtmCostComparison({ selectedTargetId }: Props) {
       }}
     >
       <h3 id="updated-dtm-heading" style={{ margin: '0 0 10px', fontSize: 22 }}>
-        Route Cost Comparison — Centerline Slope Scenario
+        Route Cost Comparison — Updated DTM
       </h3>
 
       <p style={{ margin: '0 0 12px', lineHeight: 1.6 }}>
@@ -64,7 +65,7 @@ export default function UpdatedDtmCostComparison({ selectedTargetId }: Props) {
           </strong>
           <ul>
             {comparison.errors.map((message) => (
-              <li key={message}>{message}</li>
+              <li key={message}>{publicScienceText(message)}</li>
             ))}
           </ul>
           <p>Missing or invalid measurements are never treated as zero slope.</p>
@@ -109,7 +110,7 @@ export default function UpdatedDtmCostComparison({ selectedTargetId }: Props) {
             <tr>
               <th scope="col" style={cellStyle}>Destination</th>
               <th scope="col" style={cellStyle}>Baseline cost</th>
-              <th scope="col" style={cellStyle}>Centerline cost</th>
+              <th scope="col" style={cellStyle}>Updated DTM cost</th>
               <th scope="col" style={cellStyle}>
                 Distance (baseline / updated)
               </th>
@@ -175,12 +176,12 @@ export default function UpdatedDtmCostComparison({ selectedTargetId }: Props) {
           </p>
 
           <p style={{ margin: '8px 0' }}>
-            Centerline scenario:{' '}
+            Updated DTM:{' '}
             {selected.updated?.nodeIds.join(' → ') ?? 'Unavailable'}.
           </p>
 
           <p style={{ margin: '8px 0' }}>
-            Centerline scenario mean slope on this route:{' '}
+            Updated centerline mean slope on this route:{' '}
             {formatNumber(selected.updated?.meanSlopeDegrees)}°.
           </p>
         </div>
@@ -194,10 +195,10 @@ export default function UpdatedDtmCostComparison({ selectedTargetId }: Props) {
           margin: '14px 0 0',
         }}
       >
-        <strong>Methodology:</strong> {comparison.modelDescription.replace('Updated DTM: T-016 mean centerline slope', 'Centerline scenario: mean centerline slope')} The
+        <strong>Methodology:</strong> {publicScienceText(comparison.modelDescription)} The
         experimental 15° reference is not a NASA EVA safety standard.
         Centerline measurement coverage refers to sampled positions along the
-        route, not the full corridor width. In the centerline scenario, a zero
+        route, not the full corridor width. In the updated scenario, a zero
         difficulty penalty is a neutralization of double-counted slope, not a
         measured zero hazard level.
       </p>
