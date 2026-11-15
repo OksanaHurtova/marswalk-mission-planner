@@ -1,4 +1,5 @@
 import type { ChangeEvent } from 'react';
+import SourceInfo from './SourceInfo';
 
 export type MapLayerId = 'athabasca-base' | 'athabasca-slope';
 export type LayerVisibility = Record<MapLayerId, boolean>;
@@ -62,6 +63,7 @@ export default function LayerControls({ visible, onToggle }: LayerControlsProps)
         <div><span style={{ color: '#f78535' }}>■</span> 10–15° · <span style={{ color: '#de4041' }}>■</span> понад 15°</div>
         <div>15° — дослідницький поріг, не норма NASA.</div>
       </div>
+      <SourceInfo visible={visible} />
     </fieldset>
   );
 }
