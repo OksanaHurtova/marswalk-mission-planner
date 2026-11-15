@@ -1,10 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
 import ImageLayer from 'ol/layer/Image.js';
 import ImageStatic from 'ol/source/ImageStatic.js';
 import Projection from 'ol/proj/Projection.js';
 import { getCenter } from 'ol/extent.js';
+import Feature from 'ol/Feature.js';
+import Point from 'ol/geom/Point.js';
+import VectorLayer from 'ol/layer/Vector.js';
+import VectorSource from 'ol/source/Vector.js';
+import { Circle as CircleStyle, Fill, Stroke, Style, Text } from 'ol/style.js';
 import 'ol/ol.css';
 
 type Extent = [number, number, number, number];
@@ -29,9 +34,33 @@ type LayersConfig = {
   layers: LayerConfig[];
 };
 
-export default function MarsMap() {
+// Тимчасовий контракт T-009; узгодити зі спільним src/shared/types.ts в T-053.
+export type ScientificPoint = {
+  id: string;
+  name: string;
+  localXY_m: [number, number];
+  status?: string;
+};
+
+const EMPTY_POINTS: ScientificPoint[] = [];
+
+export default function MarsMap({ points = EMPTY_POINTS }: { points?: ScientificPoint[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string | null>(null);
+  const poiSource = useMemo(() => new VectorSource<Feature<Point>>(), []);
+
+  // Оновлюємо маркери, не скидаючи масштаб і положення карти.
+  useEffect(() => {
+    poiSource.clear();
+    const features = points.map((point) => {
+      const marker = new Feature<Point>({ geometry: new Point(point.localXY_m) });
+      marker.setId(point.id);
+      marker.set('pointId', point.id);
+      marker.set('name', point.name);
+      return marker;
+    });
+    poiSource.addFeatures(features);
+  }, [points, poiSource]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -107,6 +136,24 @@ export default function MarsMap() {
               attributions: layer.attribution,
             }),
           }),
+          new VectorLayer({
+            source: poiSource,
+            zIndex: 10,
+            style: (feature) => new Style({
+              image: new CircleStyle({
+                radius: 8,
+                fill: new Fill({ color: '#ffbd55' }),
+                stroke: new Stroke({ color: '#18202a', width: 2 }),
+              }),
+              text: new Text({
+                text: String(feature.get('pointId') ?? ''),
+                offsetY: -21,
+                font: 'bold 14px sans-serif',
+                fill: new Fill({ color: '#ffffff' }),
+                stroke: new Stroke({ color: '#18202a', width: 3 }),
+              }),
+            }),
+          }),
         ],
         view,
       });
@@ -128,7 +175,7 @@ export default function MarsMap() {
       controller.abort();
       map?.setTarget(undefined);
     };
-  }, []);
+  }, [poiSource]);
 
   return (
     <div
