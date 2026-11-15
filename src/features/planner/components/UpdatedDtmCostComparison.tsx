@@ -40,7 +40,7 @@ export default function UpdatedDtmCostComparison({ selectedTargetId }: Props) {
       }}
     >
       <h3 id="updated-dtm-heading" style={{ margin: '0 0 10px', fontSize: 22 }}>
-        Route Cost Comparison — Updated DTM
+        Route Cost Comparison — Centerline Slope Scenario
       </h3>
 
       <p style={{ margin: '0 0 12px', lineHeight: 1.6 }}>
@@ -109,7 +109,7 @@ export default function UpdatedDtmCostComparison({ selectedTargetId }: Props) {
             <tr>
               <th scope="col" style={cellStyle}>Destination</th>
               <th scope="col" style={cellStyle}>Baseline cost</th>
-              <th scope="col" style={cellStyle}>Updated DTM cost</th>
+              <th scope="col" style={cellStyle}>Centerline cost</th>
               <th scope="col" style={cellStyle}>
                 Distance (baseline / updated)
               </th>
@@ -175,12 +175,12 @@ export default function UpdatedDtmCostComparison({ selectedTargetId }: Props) {
           </p>
 
           <p style={{ margin: '8px 0' }}>
-            Updated DTM:{' '}
+            Centerline scenario:{' '}
             {selected.updated?.nodeIds.join(' → ') ?? 'Unavailable'}.
           </p>
 
           <p style={{ margin: '8px 0' }}>
-            Updated centerline mean slope on this route:{' '}
+            Centerline scenario mean slope on this route:{' '}
             {formatNumber(selected.updated?.meanSlopeDegrees)}°.
           </p>
         </div>

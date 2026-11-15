@@ -34,7 +34,7 @@ export default function RouteExplanation({ route }: RouteExplanationProps) {
         (length in meters ÷ 100) × (1 + difficulty score + slope score).
         The displayed route cost is the sum of those contributions. Terrain
         difficulty and slope are both slope-derived proxies in this baseline;
-        the separate Updated DTM comparison tests an alternative treatment.
+        the separate centerline-slope comparison tests an alternative treatment.
       </p>
       <p style={{ color: '#b8c9db', lineHeight: 1.7 }}>
         <strong>Current result:</strong> {route.explanation} The selected path

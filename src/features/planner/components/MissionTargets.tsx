@@ -219,13 +219,13 @@ export default function MissionTargets({
               fontSize: 13,
             }}
           >
-            Preliminary QGIS location
+            Preliminary site coordinates
           </span>
         </div>
 
         {preliminaryPoint ? (
           <section
-            aria-label="Preliminary QGIS coordinates"
+            aria-label="Preliminary site coordinates"
             style={{
               padding: 16,
               marginTop: 20,
@@ -241,7 +241,7 @@ export default function MissionTargets({
                 marginBottom: 12,
               }}
             >
-              Preliminary QGIS Location
+              Preliminary Site Coordinates
             </h4>
 
             <p

@@ -57,7 +57,7 @@ export default function RouteSummary({
       </p>
       <p>
         <strong>Route Geometry:</strong> {renderedCoordinateCount} coordinates
-        rendered by OpenLayers
+        used to draw the route on the map
       </p>
       <p style={{ color: '#b8c8d9', fontSize: 12, lineHeight: 1.6 }}>
         Distance comparison considers only currently enabled corridors and their
